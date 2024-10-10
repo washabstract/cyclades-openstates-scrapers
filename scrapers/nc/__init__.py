@@ -370,7 +370,9 @@ class NorthCarolina(State):
 
     @property
     def legislative_sessions(self):
-        return super().legislative_sessions + self.historic_legislative_sessions
+        return list(
+            set(super().legislative_sessions + self.historic_legislative_sessions)
+        )  # list -> set -> list to eliminate any duplicate entries from 2024/2025 that we may encounter
 
     ignored_scraped_sessions = []
 
