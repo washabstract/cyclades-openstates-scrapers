@@ -2,6 +2,7 @@ import lxml
 from openstates.scrape import State
 from .bills import NCBillScraper
 from .events import NCEventScraper
+import requests
 
 
 class NorthCarolina(State):
@@ -9,7 +10,8 @@ class NorthCarolina(State):
         "bills": NCBillScraper,
         "events": NCEventScraper,
     }
-    legislative_sessions = [
+
+    historic_legislative_sessions = [
         {
             "_scraped_name": "1985-1986 Session",
             "classification": "primary",
@@ -365,6 +367,11 @@ class NorthCarolina(State):
             "active": True,
         },
     ]
+
+    @property
+    def legislative_sessions(self):
+        return super().legislative_sessions + self.historic_legislative_sessions
+
     ignored_scraped_sessions = []
 
     def get_session_list(self):
