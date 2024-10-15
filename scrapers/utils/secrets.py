@@ -18,7 +18,6 @@ def get_secret(secret_name, region="us-west-2"):
 
     try:
         secret_response = client.get_secret_value(SecretId=secret_name)
-
     except Exception as e:
         print(f"Error retrieving secret: {e}")
         return None
