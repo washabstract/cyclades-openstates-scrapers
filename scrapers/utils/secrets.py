@@ -1,5 +1,6 @@
 import boto3
 import json
+import logging
 
 
 def get_secret(secret_name, region="us-west-2"):
@@ -24,7 +25,7 @@ def get_secret(secret_name, region="us-west-2"):
     except Exception as e:
         logging.error(f"Failed to retrieve secret: {secret_name}. Error details: {e}")
         raise Exception(f"Failed to retrieve secret: {secret_name}. Error details: {e}")
-    
+
     if "SecretString" in secret_response:
         secret = json.loads(secret_response["SecretString"])[secret_name]
         return secret
