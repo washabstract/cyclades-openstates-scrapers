@@ -5,7 +5,11 @@ import logging
 
 class SecretRetrievalError(Exception):
     def __init__(self, message, secret_name=None, original_exception=None):
-        full_message = f"{message}. Secret: {secret_name}. Details: {original_exception}" if original_exception else message
+        full_message = (
+            f"{message}. Secret: {secret_name}. Details: {original_exception}"
+            if original_exception
+            else message
+        )
         super().__init__(full_message)
 
         logging.error(full_message)
@@ -37,6 +41,10 @@ def get_secret(secret_name, region="us-west-2"):
             secret = json.loads(secret_response["SecretString"])[secret_name]
             return secret
         except KeyError as ke:
-            raise SecretRetrievalError("The key was not found in the secret", secret_name, ke)
+            raise SecretRetrievalError(
+                "The key was not found in the secret", secret_name, ke
+            )
     else:
-        raise SecretRetrievalError("Secret is binary or unavailable in string format", secret_name)
+        raise SecretRetrievalError(
+            "Secret is binary or unavailable in string format", secret_name
+        )
