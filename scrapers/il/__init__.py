@@ -6,8 +6,11 @@ from .events import IlEventScraper
 
 
 class Illinois(State):
-    scrapers = {"bills": IlBillScraper, "events": IlEventScraper}
-    legislative_sessions = [
+    scrapers = {
+        "bills": IlBillScraper,
+        "events": IlEventScraper,
+    }
+    historical_legislative_sessions = [
         {
             "name": "90th Regular Session",
             "identifier": "90th",
