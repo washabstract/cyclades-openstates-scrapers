@@ -1526,7 +1526,7 @@ us = "^3.1.1"
 type = "git"
 url = "https://github.com/washabstract/cyclades-openstates-core"
 reference = "HEAD"
-resolved_reference = "6b9ca9df0db8695486a597701803a11fae53eb47"
+resolved_reference = "1b6e57ca953a43295292ec84ae335a54d7be78d9"
 
 [[package]]
 name = "pandas"
