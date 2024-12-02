@@ -69,7 +69,7 @@ class Washington(State):
             "name": "2023-2024 Regular Session",
             "start_date": "2023-01-09",
             "end_date": "2024-03-07",
-            "active": True,
+            "active": False,
         },
         {
             "_scraped_name": "2025",
