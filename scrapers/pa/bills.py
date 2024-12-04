@@ -100,7 +100,14 @@ class PABillScraper(Scraper):
         )
 
         # only fetch votes if votes were seen in history
-        yield from self.parse_votes(bill, page)
+        # vote links are often taken down on PA website; this moves on if a vote link is missing or incorrect
+        # this will not affect the bill JSONs themselves, only the ancillary vote_event JSONs
+        try:
+            yield from self.parse_votes(bill, page)
+        except Exception as e:
+            self.logger.warning(
+                f"Failed to parse votes for bill {bill_id}: {e}. Continuing without votes."
+            )
 
         # Dedupe sources.
         sources = bill.sources
