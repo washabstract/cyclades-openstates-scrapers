@@ -233,7 +233,7 @@ class WABillScraper(Scraper, LXMLMixin):
         year = int(session[0:4])
 
         self._bill_id_list = self.get_prefiles(chamber, session, year)
-        self.biennium = "%s-%s" % (session[0:4], session[7:9])
+        self.biennium = "%s-%s" % (session[0:4], str(int(session[2:4]) + 1))
 
         for chamber in chambers:
             self.scrape_chamber(chamber, session)
