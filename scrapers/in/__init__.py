@@ -13,7 +13,7 @@ class Indiana(State):
         "bills": INBillScraper,
         "events": INEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "First Regular Session 116th General Assembly (2009)",
             "identifier": "2009",
