@@ -5,6 +5,8 @@ from urllib.parse import urljoin
 import functools
 import requests
 
+from utils.secrets import get_secret
+
 """
 API key must be passed as a header. You need the following headers to get JSON:
 x-api-key = your_apikey
@@ -79,7 +81,7 @@ class ApiClient(object):
 
     def __init__(self, scraper):
         self.scraper = scraper
-        self.apikey = os.environ["INDIANA_API_KEY"]
+        self.apikey = get_secret("INDIANA_API_KEY")
         self.user_agent = os.getenv("USER_AGENT", "openstates")
 
     def get_session_no(self, session):
