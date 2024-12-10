@@ -16,7 +16,7 @@ class Florida(State):
     }
     # Full session list through 2019:
     # https://flsenate.gov/PublishedContent/OFFICES/SECRETARY/SessionsoftheFloridaSenateFromStatehood.pdf
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "name": "2011 Regular Session",
             "identifier": "2011",
