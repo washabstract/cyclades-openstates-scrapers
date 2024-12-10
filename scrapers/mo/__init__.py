@@ -11,7 +11,7 @@ class Missouri(State):
         # 'votes': MOVoteScraper,
         "events": MOEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2019 Regular Session",
             "classification": "primary",
