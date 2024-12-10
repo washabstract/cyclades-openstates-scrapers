@@ -12,7 +12,7 @@ class NewJersey(State):
         "bills": NJBillScraper,
         "events": NJEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2008-2009 Session",
             "identifier": "213",
