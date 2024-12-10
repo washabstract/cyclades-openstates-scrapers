@@ -3,6 +3,7 @@ import requests
 from openstates.scrape import State
 from .bills import INBillScraper
 from .events import INEventScraper
+from utils.secrets import get_secret
 
 settings = dict(SCRAPELIB_TIMEOUT=600)
 
@@ -172,7 +173,7 @@ class Indiana(State):
     ]
 
     def get_session_list(self):
-        apikey = os.environ["INDIANA_API_KEY"]
+        apikey = get_secret("INDIANA_API_KEY")
         useragent = os.getenv("USER_AGENT", "openstates")
         headers = {
             "x-api-key": apikey,
