@@ -11,7 +11,7 @@ class DistrictOfColumbia(State):
         "events": DCEventScraper,
         "bills": DCBillScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "19",
             "identifier": "19",
