@@ -8,6 +8,7 @@ from openstates.scrape import Scraper, Bill, VoteEvent
 from .actions import Bill_Categorizer, Vote_Categorizer
 
 from utils.media import get_media_type
+from utils.secrets import get_secret
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -20,7 +21,7 @@ class DCBillScraper(Scraper):
     _API_BASE_URL = "https://lims.dccouncil.gov/api/v2/PublicData/"
 
     _headers = {
-        "Authorization": os.environ["DC_API_KEY"],
+        "Authorization": get_secret("DC_API_KEY"),
         "Accept": "application/json",
         "User-Agent": os.getenv("USER_AGENT", "openstates"),
     }

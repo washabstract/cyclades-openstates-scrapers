@@ -3,6 +3,7 @@ import requests
 from openstates.scrape import State
 from .bills import DCBillScraper
 from .events import DCEventScraper
+from utils.secrets import get_secret
 
 
 class DistrictOfColumbia(State):
@@ -10,7 +11,7 @@ class DistrictOfColumbia(State):
         "events": DCEventScraper,
         "bills": DCBillScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "19",
             "identifier": "19",
@@ -78,7 +79,7 @@ class DistrictOfColumbia(State):
     ]
 
     def get_session_list(self):
-        apikey = os.environ["DC_API_KEY"]
+        apikey = get_secret("DC_API_KEY")
         useragent = os.getenv("USER_AGENT", "openstates")
         headers = {
             "Authorization": apikey,
