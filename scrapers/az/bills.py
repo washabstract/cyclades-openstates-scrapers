@@ -353,34 +353,42 @@ class AZBillScraper(Scraper):
     def scrape(self, chamber=None, session=None):
         session_id = session_metadata.session_id_meta_data[session]
 
-        # Get the bills page to start the session
-        req = self.get("https://www.azleg.gov/bills/", timeout=80)
+        init_req = self.get("https://www.azleg.gov/bills/", timeout=80)
+        cookies = init_req.cookies
 
         session_form_url = "https://www.azleg.gov/azlegwp/setsession.php"
         form = {"sessionID": session_id}
         headers = {
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
             "Referer": "https://www.azleg.gov/azlegwp/",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         }
-        req = self.post(
+        session_req = self.post(
             url=session_form_url,
             data=form,
-            cookies=req.cookies,
+            cookies=cookies,
             headers=headers,
             allow_redirects=True,
         )
 
-        bill_list_url = "https://www.azleg.gov/bills/"
+        phpsessid = session_req.cookies.get("PHPSESSID")
+        if not phpsessid:
+            raise ValueError("PHPSESSID not found in cookies after setting session.")
 
-        page = self.get(bill_list_url, timeout=80, cookies=req.cookies).content
-        # There's an errant close-comment that browsers handle
-        # but LXML gets really confused.
-        page = page.replace(b"--!>", b"-->")
-        page = html.fromstring(page)
+        bill_list_url = (
+            f"https://www.azleg.gov/bills/?PHPSESSID={phpsessid}&sessionID={session_id}"
+        )
+
+        page_content = self.get(bill_list_url, timeout=80).content
+
+        # Handle errant close-comment for lxml parsing
+        page_content = page_content.replace(b"--!>", b"-->")
+        page = html.fromstring(page_content)
+
+        # Ensure the session ID is correctly selected
         assert (
-            len(page.xpath(f"//option[@value={session_id} and @selected]")) == 1
+            len(page.xpath(f"//option[@value='{session_id}' and @selected]")) == 1
         ), "Session ID not in bill list"
 
         bill_rows = []
@@ -393,8 +401,6 @@ class AZBillScraper(Scraper):
             for row in bill_rows:
                 bill_id = row.xpath("th/a/text()")[0]
                 yield from self.scrape_bill(chamber, session, bill_id, session_id)
-
-        # TODO: MBTable - Non-bill Misc Motions?
 
     def get_bill_type(self, bill_id):
         for key in utils.bill_types:
