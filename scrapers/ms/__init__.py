@@ -9,7 +9,7 @@ class Mississippi(State):
         "bills": MSBillScraper,
         "events": MSEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2008 Regular Session",
             "identifier": "2008",
