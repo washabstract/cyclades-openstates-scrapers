@@ -9,7 +9,7 @@ class Nebraska(State):
         "bills": NEBillScraper,
         "events": NEEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "102nd Legislature 1st and 2nd Sessions",
             "end_date": "2012-04-18",
