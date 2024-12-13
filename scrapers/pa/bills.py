@@ -38,13 +38,20 @@ class PABillScraper(Scraper):
         url = utils.bill_list_url(chamber, session, special)
         page = self.get_page(url)
 
+        # PA website repeats some bills on the listing page
+        # ex: resolutions that are also concurrent resolutions
+        bill_urls_seen = []
+
         RETRY_TIMES = 5
         for link in page.xpath('//a[@class="bill"]'):
             is_parsed = False
             for retry_time in range(0, RETRY_TIMES):
                 try:
-                    yield from self.parse_bill(chamber, session, special, link)
+                    if link.attrib["href"] not in bill_urls_seen:
+                        bill_urls_seen.append(link.attrib["href"])
+                        yield from self.parse_bill(chamber, session, special, link)
                     is_parsed = True
+
                     break
                 except Exception as e:
                     self.logger.warning(
@@ -284,8 +291,8 @@ class PABillScraper(Scraper):
             elif "/roll-call-votes/" in url:
                 # As of Nov 2024, this URL in the new site is broken
                 # but works if we add a query param
-                if "sessyr" not in url:
-                    url = f"{url}&sessyr={self.session_year}"
+                if "sessyr" not in url.lower():
+                    url = f"{url}&sessYr={self.session_year}"
                 yield from self.parse_committee_votes(bill, url)
             else:
                 msg = "Unexpected vote url: %r" % url
