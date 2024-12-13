@@ -9,7 +9,7 @@ class Montana(State):
         "bills": MTBillScraper,
         "events": MTEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "20111",
             "identifier": "2011",
