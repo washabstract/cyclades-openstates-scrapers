@@ -3,7 +3,6 @@ import re
 import io
 import datetime
 import pytz
-import os
 import ssl
 import ftplib
 import tempfile
