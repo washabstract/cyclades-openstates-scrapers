@@ -2,7 +2,6 @@ import re
 import csv
 import datetime
 import pytz
-import os
 import ssl
 import ftplib
 import tempfile
@@ -14,6 +13,7 @@ from openstates.exceptions import EmptyScrape
 import lxml.html
 
 from .common import get_slug_for_session, get_biennium_year
+from utils.secrets import get_secret
 
 TIMEZONE = pytz.timezone("US/Central")
 _AR_ORGANIZATION_ENTITY_NAME_KEYWORDS = [
@@ -53,8 +53,8 @@ class ARBillScraper(Scraper):
 
     def scrape(self, chamber=None, session=None):
 
-        self.ftp_user = os.environ.get("AR_FTP_USER")
-        self.ftp_pass = os.environ.get("AR_FTP_PASSWORD")
+        self.ftp_user = get_secret("AR_FTP_USER")
+        self.ftp_pass = get_secret("AR_FTP_PASSWORD")
 
         if not self.ftp_user or not self.ftp_pass:
             self.error("AR_FTP_USER and AR_FTP_PASSWORD env variables are required.")
