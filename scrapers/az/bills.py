@@ -353,9 +353,6 @@ class AZBillScraper(Scraper):
     def scrape(self, chamber=None, session=None):
         session_id = session_metadata.session_id_meta_data[session]
 
-        init_req = self.get("https://www.azleg.gov/bills/", timeout=80)
-        cookies = init_req.cookies
-
         session_form_url = "https://www.azleg.gov/azlegwp/setsession.php"
         form = {"sessionID": session_id}
         headers = {
@@ -367,7 +364,6 @@ class AZBillScraper(Scraper):
         session_req = self.post(
             url=session_form_url,
             data=form,
-            cookies=cookies,
             headers=headers,
             allow_redirects=True,
         )
