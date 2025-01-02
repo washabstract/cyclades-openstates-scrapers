@@ -3,13 +3,13 @@ import re
 import dateutil
 import json
 import lxml
-import os
 import pytz
 import requests
 import urllib3
 
 from openstates.scrape import Scraper, Bill, VoteEvent
 from .actions import Categorizer
+from utils.secrets import get_secret
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -45,14 +45,14 @@ class VaBillScraper(Scraper):
             if i["identifier"] == session:
                 self.session_code = i["extras"]["session_code"]
 
-        if not os.getenv("VA_API_KEY"):
+        if not get_secret("VA_API_KEY"):
             self.error(
                 "Virginia requires an LIS api key. Register at https://lis.virginia.gov/developers \n API key registration can take days, the csv_bills scraper works without one."
             )
             return
 
         self.headers = {
-            "WebAPIKey": os.getenv("VA_API_KEY"),
+            "WebAPIKey": get_secret("VA_API_KEY"),
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
