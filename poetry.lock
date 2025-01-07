@@ -540,6 +540,41 @@ files = [
 ]
 
 [[package]]
+name = "cyclades"
+version = "6.20.13"
+description = "core infrastructure for the openstates project"
+optional = false
+python-versions = "^3.9"
+files = []
+develop = false
+
+[package.dependencies]
+attrs = "^20.2.0"
+boto3 = "^1.26.61"
+chardet = "^3.0"
+click = "^8.0"
+dj_database_url = "^0.5.0"
+Django = "3.2.14"
+google-cloud-storage = "^2.18.0"
+influxdb-client = "^1.37.0"
+jsonschema = "^3.2.0"
+psycopg2-binary = "^2.8.4"
+pydantic = "^1.8.2"
+PyJWT = "^2.5.0"
+pytz = "^2024.1"
+PyYAML = "^6.0"
+scrapelib = "^2.0.7"
+spatula = ">=0.8.9,<1.0"
+textract = "^1.6"
+us = "^3.1.1"
+
+[package.source]
+type = "git"
+url = "https://github.com/washabstract/cyclades-openstates-core"
+reference = "semantics"
+resolved_reference = "d0f1d1619c16238a35e9cccc9b013cdd28f3a667"
+
+[[package]]
 name = "decorator"
 version = "5.1.1"
 description = "Decorators for Humans"
@@ -1480,41 +1515,6 @@ files = [
 
 [package.dependencies]
 et-xmlfile = "*"
-
-[[package]]
-name = "openstates"
-version = "6.20.12"
-description = "core infrastructure for the cyclades project"
-optional = false
-python-versions = "^3.9"
-files = []
-develop = false
-
-[package.dependencies]
-attrs = "^20.2.0"
-boto3 = "^1.26.61"
-chardet = "^3.0"
-click = "^8.0"
-dj_database_url = "^0.5.0"
-Django = "3.2.14"
-google-cloud-storage = "^2.18.0"
-influxdb-client = "^1.37.0"
-jsonschema = "^3.2.0"
-psycopg2-binary = "^2.8.4"
-pydantic = "^1.8.2"
-PyJWT = "^2.5.0"
-pytz = "^2024.1"
-PyYAML = "^6.0"
-scrapelib = "^2.0.7"
-spatula = ">=0.8.9,<1.0"
-textract = "^1.6"
-us = "^3.1.1"
-
-[package.source]
-type = "git"
-url = "https://github.com/washabstract/cyclades-openstates-core"
-reference = "HEAD"
-resolved_reference = "6b9ca9df0db8695486a597701803a11fae53eb47"
 
 [[package]]
 name = "pandas"
@@ -2838,4 +2838,4 @@ california = ["SQLAlchemy", "mysqlclient"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "ec47cd8704e0c63b15dc806e2c5e06882b29378d8fe2251f630b5d6556f45f19"
+content-hash = "6f7435d3dfa6a029322c1e2312cf0e9a9164aec2594c07afabb2bf2f71d6c9d8"
