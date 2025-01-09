@@ -69,16 +69,21 @@ class VaBillScraper(Scraper):
         for row in page["Legislations"]:
             # the short title on the VA site is 'description',
             # LegislationTitle is on top of all the versions
-            title = row["Description"]
-            # these properties can occasionally be null
-            if row["LegislationTitle"] is not None:
+
+            # Note, in several rows from 'page["Legislations"]', bills are missing the "LegislationTitle"
+            # or "LegislationSummary" keys resulting in unsuccessful scrapes.  The if/else blocks below
+            # get around this.
+            if not isinstance(row["LegislationTitle"], str):
+                subtitle = " "
+            else:
                 subtitle = self.text_from_html(row["LegislationTitle"])
+
+            if not isinstance(row["LegislationSummary"], str):
+                description = " "
             else:
-                subtitle = None
-            if row["LegislationSummary"] is not None:
                 description = self.text_from_html(row["LegislationSummary"])
-            else:
-                description = None
+
+            title = row["Description"]
 
             bill = Bill(
                 row["LegislationNumber"],
