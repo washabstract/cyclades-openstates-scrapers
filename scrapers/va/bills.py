@@ -74,12 +74,12 @@ class VaBillScraper(Scraper):
             # or "LegislationSummary" keys resulting in unsuccessful scrapes.  The if/else blocks below
             # get around this.
             if not isinstance(row["LegislationTitle"], str):
-                subtitle = ""
+                subtitle = " "
             else:
                 subtitle = self.text_from_html(row["LegislationTitle"])
 
             if not isinstance(row["LegislationSummary"], str):
-                description = ""
+                description = " "
             else:
                 description = self.text_from_html(row["LegislationSummary"])
 
