@@ -88,7 +88,11 @@ jobs:
 
       - name: Echo PR
         run: |
-          gh pr create --body "Changes from PR https://github.com/washabstract/cyclades-openstates-scrapers/pull/${PR}" --title "Update CYCLADES_IMAGE_TAG to ${GITHUB_SHA}"
+          gh pr create \
+          --base main \
+          --head update-image-tag-${GITHUB_SHA} \
+          --body "Changes from PR https://github.com/washabstract/cyclades-openstates-scrapers/pull/${PR}" \
+          --title "Update CYCLADES_IMAGE_TAG to ${GITHUB_SHA}"
         if: success() && steps.findPr.outputs.number
         env:
           PR: ${{ steps.findPr.outputs.pr }}
