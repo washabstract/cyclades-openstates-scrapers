@@ -26,7 +26,7 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and push to Amazon ECR
+      - name: Build and push cyclades-scrapers image to Amazon ECR
         env:
           DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
@@ -35,6 +35,15 @@ jobs:
           docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:latest
           docker push $DOCKER_IMAGE:$GITHUB_SHA
           docker push $DOCKER_IMAGE:latest
+      
+      - name: Build and push cyclades-scrapers-ca image to Amazon ECR
+        env:
+          DOCKER_IMAGE_CA: ${{ secrets.DOCKER_IMAGE_CA }}
+        run: |
+          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64        
+          docker tag $DOCKER_IMAGE_CA:$GITHUB_SHA $DOCKER_IMAGE_CA:latest
+          docker push $DOCKER_IMAGE_CA:$GITHUB_SHA
+          docker push $DOCKER_IMAGE_CA:latest
 
   sync_dags:
     if: github.ref == 'refs/heads/main'
@@ -64,8 +73,12 @@ jobs:
           ref: main
 
       - name: Update .env file
-        run: sed -i '/^CYCLADES_IMAGE_TAG=/d' artemis/aws/.env && echo "CYCLADES_IMAGE_TAG=${GITHUB_SHA}" >> artemis/aws/.env
+        run: |
+          sed -i '/^CYCLADES_IMAGE_TAG=/d' artemis/aws/.env
+          sed -i '/^CA_CYCLADES_IMAGE_TAG=/d' artemis/aws/.env
 
+          echo "CYCLADES_IMAGE_TAG=${GITHUB_SHA}" >> artemis/aws/.env
+          echo "CA_CYCLADES_IMAGE_TAG=${GITHUB_SHA}" >> artemis/aws/.env
       - name: Configure git
         run: |
           git config --global user.name "send-pr.yml workflow"
