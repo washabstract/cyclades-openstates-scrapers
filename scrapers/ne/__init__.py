@@ -92,6 +92,15 @@ class Nebraska(State):
             "start_date": "2024-07-25",
             "end_date": "2024-07-31",
             "classification": "special",
+            "active": False,
+        },
+        {
+            "_scraped_name": "109th Legislature 1st and 2nd Sessions",
+            "identifier": "109",
+            "name": "109th Legislature (2025-2026)",
+            "start_date": "2025-01-08",
+            "end_date": "2026-04-19",
+            "classification": "primary",
             "active": True,
         },
     ]

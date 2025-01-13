@@ -14,6 +14,13 @@ central = pytz.timezone("US/Central")
 
 
 session_details = {
+    # TODO, fill these in once appointed
+    # TODO: move this to session metadata
+    "104th": {
+        "speaker": "",
+        "president": "",
+        "params": {"GA": "104", "SessionId": "114"},
+    },
     "103rd": {
         "speaker": "Welch",
         "president": "Harmon",
@@ -768,6 +775,10 @@ class IlBillScraper(Scraper):
             else:
                 # Converts "Davis,William" to "Davis, William".
                 name = re.sub(r"\,([a-zA-Z])", r", \1", name)
+
+            if name == "":
+                self.logger.warning(f"Found empty voter name in parsing vote at {href}")
+                continue
 
             if vcode == "Y":
                 yes_votes.append(name)

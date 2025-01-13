@@ -84,6 +84,15 @@ class VaBillScraper(Scraper):
                 description = self.text_from_html(row["LegislationSummary"])
 
             title = row["Description"]
+            # these properties can occasionally be null
+            if row["LegislationTitle"] is not None:
+                subtitle = self.text_from_html(row["LegislationTitle"])
+            else:
+                subtitle = None
+            if row["LegislationSummary"] is not None:
+                description = self.text_from_html(row["LegislationSummary"])
+            else:
+                description = None
 
             bill = Bill(
                 row["LegislationNumber"],
@@ -96,10 +105,12 @@ class VaBillScraper(Scraper):
             self.add_actions(bill, row["LegislationID"])
             self.add_versions(bill, row["LegislationID"])
             self.add_carryover_related_bill(bill)
-            self.add_sponsors(bill, row["Patrons"])
+            self.add_sponsors(bill, row["LegislationID"])
             yield from self.add_votes(bill, row["LegislationID"])
-            bill.add_abstract(subtitle, note="title")
-            bill.add_abstract(description, row["SummaryVersion"])
+            if subtitle is not None:
+                bill.add_abstract(subtitle, note="title")
+            if description is not None:
+                bill.add_abstract(description, row["SummaryVersion"])
 
             bill.extras["VA_LEG_ID"] = row["LegislationID"]
 
@@ -159,7 +170,13 @@ class VaBillScraper(Scraper):
         if has_carryover_action:
             bill.add_related_bill(bill.identifier, f"{prior_session}", "prior-session")
 
-    def add_sponsors(self, bill: Bill, sponsors: list):
+    def add_sponsors(self, bill: Bill, legislation_id: str):
+        page = requests.get(
+            f"{self.base_url}/LegislationPatron/api/GetLegislationPatronsByIdAsync/{legislation_id}",
+            headers=self.headers,
+            verify=False,
+        ).json()
+        sponsors = page["Patrons"]
         for row in sponsors:
             primary = True if row["Name"] == "Chief Patron" else False
             bill.add_sponsorship(
@@ -175,12 +192,17 @@ class VaBillScraper(Scraper):
             "sessionCode": self.session_code,
             "legislationID": legislation_id,
         }
-        page = requests.get(
+        response = requests.get(
             f"{self.base_url}/LegislationText/api/getlegislationtextbyidasync",
             params=body,
             headers=self.headers,
             verify=False,
-        ).json()
+        )
+        # occasionally this returns empty response, HTTP 204
+        if len(response.text) == 0:
+            return
+
+        page = response.json()
 
         for row in page["TextsList"]:
             if (row["PDFFile"] and len(row["PDFFile"]) > 1) or (
