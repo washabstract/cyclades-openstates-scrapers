@@ -8,7 +8,7 @@ class Alabama(State):
         "bills": ALBillScraper,
         "events": ALEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2023 First Special Session",
             "classification": "special",

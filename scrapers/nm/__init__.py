@@ -11,7 +11,7 @@ class NewMexico(State):
         "events": NMEventScraper,
         "votes": NMVoteScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2011 Regular",
             "identifier": "2011",

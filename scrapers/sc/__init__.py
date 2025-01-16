@@ -12,7 +12,7 @@ class SouthCarolina(State):
         "bills": SCBillScraper,
         "events": SCEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "119 - (2011-2012)",
             "classification": "primary",

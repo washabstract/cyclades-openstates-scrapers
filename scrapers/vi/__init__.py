@@ -10,7 +10,7 @@ class VirginIslands(State):
         "bills": VIBillScraper,
         "events": VIEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "30",
             "classification": "primary",

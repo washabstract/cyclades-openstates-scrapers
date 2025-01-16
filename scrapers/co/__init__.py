@@ -9,7 +9,7 @@ class Colorado(State):
         "bills": COBillScraper,
         "events": COEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2011 Regular Session",
             "classification": "primary",

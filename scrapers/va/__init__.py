@@ -17,7 +17,7 @@ class Virginia(State):
         "csv_bills": VaCSVBillScraper,
         "bills": VaBillScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2010 Session",
             "identifier": "2010",

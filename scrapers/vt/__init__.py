@@ -19,7 +19,7 @@ class Vermont(State):
         "bills": VTBillScraper,
         "events": VTEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2009-2010 Session",
             "classification": "primary",

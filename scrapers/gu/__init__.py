@@ -9,7 +9,7 @@ class Guam(State):
         "events": GUEventScraper,
     }
     # sessions before 37th are missing many labels
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "37th",
             "identifier": "37th",

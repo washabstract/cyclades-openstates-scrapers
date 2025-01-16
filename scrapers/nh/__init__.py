@@ -9,7 +9,7 @@ class NewHampshire(State):
         "bills": NHBillScraper,
         "events": NHEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "identifier": "2011",
             "name": "2011 Regular Session",

@@ -9,7 +9,7 @@ class Maine(State):
         "bills": MEBillScraper,
         "events": MEEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "121st Legislature",
             "identifier": "121",
