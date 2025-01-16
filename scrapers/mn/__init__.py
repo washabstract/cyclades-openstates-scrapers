@@ -23,7 +23,7 @@ class Minnesota(State):
         "votes": MNVoteScraper,
         "events": MNEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "86th Legislature, 2009-2010",
             "classification": "primary",

@@ -9,7 +9,7 @@ class Arkansas(State):
         "bills": ARBillScraper,
         "events": AREventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "Regular Session, 2011",
             "classification": "primary",

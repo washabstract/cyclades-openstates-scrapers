@@ -8,7 +8,7 @@ class Wyoming(State):
         "bills": WYBillScraper,
         "events": WYEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2011",
             "classification": "primary",

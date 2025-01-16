@@ -15,7 +15,7 @@ class California(State):
         "events": CAEventScraper,
         "events_web": CAEventWebScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "classification": "primary",
             "identifier": "19891990",

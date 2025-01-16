@@ -9,7 +9,7 @@ class Wisconsin(State):
         "bills": WIBillScraper,
         "events": WIEventScraper,
     }
-    legislative_sessions = [
+    historical_legislative_sessions = [
         {
             "_scraped_name": "2009 Regular Session",
             "classification": "primary",
