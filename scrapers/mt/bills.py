@@ -462,9 +462,20 @@ class MTBillScraper(Scraper):
         for row in page:
             motion = row["motion"]
 
-            counts = {"YES": 0, "NO": 0, "ABSENT": 0}
+            counts = {
+                "YES": 0,
+                "NO": 0,
+                "ABSENT": 0,
+                "EXCUSED": 0,
+            }
             for v in row["legislatorVotes"]:
                 vote_type_key = "voteType" if "voteType" in v else "committeeVote"
+                # validation doesn't allow hybrid votes eg YES_EXCUSED
+                # so translate these to YES and NO
+                if v[vote_type_key] == "YES_EXCUSED":
+                    counts["YES"] += 1
+                elif v[vote_type_key] == "NO_EXCUSED":
+                    counts["NO"] += 1
                 counts[v[vote_type_key]] += 1
 
             passed = counts["YES"] > counts["NO"]
@@ -518,9 +529,8 @@ class MTBillScraper(Scraper):
                 classification=[],
             )
 
-            vote.set_count("yes", counts["YES"])
-            vote.set_count("no", counts["NO"])
-            vote.set_count("absent", counts["NO"])
+            for count_key in counts.keys():
+                vote.set_count(count_key.lower(), counts[count_key])
             vote.add_source(bill.sources[0]["url"])
 
             for v in row["legislatorVotes"]:
@@ -538,6 +548,8 @@ class MTBillScraper(Scraper):
                     vote.no(voter)
                 elif v[vote_type_key] == "ABSENT":
                     vote.vote("absent", voter)
+                elif v[vote_type_key] == "EXCUSED":
+                    vote.vote("excused", voter)
                 else:
                     self.error(v)
                     raise NotImplementedError
