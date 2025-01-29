@@ -183,17 +183,17 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.36.7"
+version = "1.36.8"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "boto3-1.36.7-py3-none-any.whl", hash = "sha256:ab501f75557863e2d2c9fa731e4fe25c45f35e0d92ea0ee11a4eaa63929d3ede"},
-    {file = "boto3-1.36.7.tar.gz", hash = "sha256:ae98634efa7b47ced1b0d7342e2940b32639eee913f33ab406590b8ed55ee94b"},
+    {file = "boto3-1.36.8-py3-none-any.whl", hash = "sha256:7f61c9d0ea64f484a17c1e3115fdf90fd7b17ab6771e07cb4549f42b9fd28fb9"},
+    {file = "boto3-1.36.8.tar.gz", hash = "sha256:ac47215d320b0c2534340db58d6d5284cb1860b7bff172b4dd6eee2dee1d5779"},
 ]
 
 [package.dependencies]
-botocore = ">=1.36.7,<1.37.0"
+botocore = ">=1.36.8,<1.37.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.11.0,<0.12.0"
 
@@ -202,13 +202,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.36.7"
+version = "1.36.8"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore-1.36.7-py3-none-any.whl", hash = "sha256:a6c6772d777af2957ac9975207fac1ccc4ce101408b85e9b5e3c5ba0bb949102"},
-    {file = "botocore-1.36.7.tar.gz", hash = "sha256:9abc64bde5e7d8f814ea91d6fc0a8142511fc96427c19fe9209677c20a0c9e6e"},
+    {file = "botocore-1.36.8-py3-none-any.whl", hash = "sha256:59d3fdfbae6d916b046e973bebcbeb70a102f9e570ca86d5ba512f1854b78fc2"},
+    {file = "botocore-1.36.8.tar.gz", hash = "sha256:81c88e5566cf018e1411a68304dc1fb9e4156ca2b50a3a0f0befc274299e67fa"},
 ]
 
 [package.dependencies]
@@ -1518,37 +1518,6 @@ files = [
 et-xmlfile = "*"
 
 [[package]]
-name = "openstates"
-version = "6.20.14"
-description = "core infrastructure for the openstates project"
-optional = false
-python-versions = "<4.0,>=3.9"
-files = [
-    {file = "openstates-6.20.14-py3-none-any.whl", hash = "sha256:67d0920ca16263ef76e92fef0e07e941d7f86ae4b9050c2cf493094c183955b0"},
-    {file = "openstates-6.20.14.tar.gz", hash = "sha256:6b180f7dd3a962ffed478d41cdadc9c379b4869db71099a7f4fc62ea9e0cac76"},
-]
-
-[package.dependencies]
-attrs = ">=20.2.0,<21.0.0"
-boto3 = ">=1.26.61,<2.0.0"
-chardet = ">=3.0,<4.0"
-click = ">=8.0,<9.0"
-dj_database_url = ">=0.5.0,<0.6.0"
-Django = "3.2.14"
-google-cloud-storage = ">=2.18.0,<3.0.0"
-influxdb-client = ">=1.37.0,<2.0.0"
-jsonschema = ">=3.2.0,<4.0.0"
-psycopg2-binary = ">=2.8.4,<3.0.0"
-pydantic = ">=1.8.2,<2.0.0"
-PyJWT = ">=2.5.0,<3.0.0"
-pytz = ">=2024.1,<2025.0"
-PyYAML = ">=6.0,<7.0"
-scrapelib = ">=2.0.7,<3.0.0"
-spatula = ">=0.8.9,<1.0"
-textract = ">=1.6,<2.0"
-us = ">=3.1.1,<4.0.0"
-
-[[package]]
 name = "pandas"
 version = "2.2.3"
 description = "Powerful data structures for data analysis, time series, and statistics"
@@ -2176,7 +2145,6 @@ python-versions = ">=3.9"
 files = [
     {file = "pymupdf-1.25.2-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:59dea22b633cc4fc13670b4c5db50d71f8cd4f420814420f33ce47ddcb61e1f6"},
     {file = "pymupdf-1.25.2-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:e8b8a874497cd0deee89a6a4fb76a3a08173c8d39e88fc7cf715764ec5a243e9"},
-    {file = "pymupdf-1.25.2-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:f61e5cdb25b86eb28d34aa3557b49ecf9e361d5f5cd3b1660406f8f0bf813af7"},
     {file = "pymupdf-1.25.2-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:ae8cfa7a97d78f813d286ecba32369059d88073edd1e5cf105f4cd0811f71925"},
     {file = "pymupdf-1.25.2-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:295505fe1ecb7c7b57d4124d373e207ea311d8e40bc7ac3016d8ec2d60b091e9"},
     {file = "pymupdf-1.25.2-cp39-abi3-win32.whl", hash = "sha256:b9488c8b82bb9be36fb13ee0c8d43b0ddcc50af83b61da01e6040413d9e67da6"},
@@ -2862,13 +2830,13 @@ files = [
 
 [[package]]
 name = "xlsxwriter"
-version = "3.2.1"
+version = "3.2.2"
 description = "A Python module for creating Excel XLSX files."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "XlsxWriter-3.2.1-py3-none-any.whl", hash = "sha256:7e8f7c60b7a1660ef791d46ab5de78469cb978b991ca841af61f5832d2f9f4fe"},
-    {file = "XlsxWriter-3.2.1.tar.gz", hash = "sha256:97618759cb264fb6a93397f660cca156ffa9561743b1823dafb60dc4474e1902"},
+    {file = "XlsxWriter-3.2.2-py3-none-any.whl", hash = "sha256:272ce861e7fa5e82a4a6ebc24511f2cb952fde3461f6c6e1a1e81d3272db1471"},
+    {file = "xlsxwriter-3.2.2.tar.gz", hash = "sha256:befc7f92578a85fed261639fb6cde1fd51b79c5e854040847dde59d4317077dc"},
 ]
 
 [extras]
@@ -2877,4 +2845,4 @@ california = ["SQLAlchemy", "mysqlclient"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "32bec41ff66f77ed09419d04752c5d0d12bbce619f6be3354503aaa6766b4e60"
+content-hash = "9235a1b4cb7bceae60bc7a1ebdca333dae60c926eda2256ebd9fe101e09bf601"
