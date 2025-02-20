@@ -10,7 +10,8 @@ from openstates.exceptions import EmptyScrape
 import lxml.html
 
 from .common import get_slug_for_session, get_biennium_year
-from utils.secrets import get_secret
+
+# from utils.secrets import get_secret
 
 TIMEZONE = pytz.timezone("US/Central")
 _AR_ORGANIZATION_ENTITY_NAME_KEYWORDS = [
