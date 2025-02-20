@@ -143,17 +143,19 @@ class ALBillScraper(Scraper):
                 chamber=chamber,
                 classification=self.bill_types[row["instrumentType"]],
             )
-            sponsor = row["sponsor"]
-            if sponsor == "":
-                self.warning("No sponsors")
-                continue
 
-            bill.add_sponsorship(
-                name=sponsor,
-                entity_type="person",
-                classification="primary",
-                primary=True,
-            )
+            if "sponsor" in row and row["sponsor"] and row["sponsor"].strip != "":
+                sponsor = row["sponsor"]
+
+                bill.add_sponsorship(
+                    name=sponsor,
+                    entity_type="person",
+                    classification="primary",
+                    primary=True,
+                )
+            else:
+                self.warning(f"No sponsors for {bill_id}")
+                continue
 
             self.scrape_versions(bill, row)
             # todo: hook up votes to actions and make this whole chain yield
@@ -323,12 +325,14 @@ class ALBillScraper(Scraper):
             )
 
         for row in page["data"]["birs"]["data"]:
-            bill.add_document_link(
-                f"Budget Isolation Resolution: {row['description']}",
-                row["url"],
-                media_type="application/pdf",
-                on_duplicate="ignore",
-            )
+            # So far it looks like "birs" do not have url
+            if "url" in row:
+                bill.add_document_link(
+                    f"Budget Isolation Resolution: {row['matter']}",
+                    row["url"],
+                    media_type="application/pdf",
+                    on_duplicate="ignore",
+                )
 
     def scrape_versions(self, bill: Bill, row: dict):
         if row["introducedUrl"]:
