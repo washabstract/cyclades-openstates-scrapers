@@ -59,7 +59,7 @@ class SenateAgendaPdf(PdfPage):
                 date = date.split(", ", 1)[1]
                 time = time.replace(".", "").replace("am", "AM").replace("pm", "PM")
                 # AR is after recess, which is undefined
-                start_time = f"{date} {time}".replace("AR", "")
+                start_time = f"{date} {time}".replace("AR+", "").replace("AR", "")
                 try:
                     start_time = datetime.datetime.strptime(
                         start_time, "%B %d, %Y %I:%M %p"
@@ -138,6 +138,9 @@ class MSEventScraper(Scraper):
                 # Sometimes time is "AA+01" or "AA+10" etc. so not all will parse
                 # treat those "non-time" times as all day events
                 time_of_day = cols[1].text_content()
+                # This is probably the table headers
+                if time_of_day == "Time":
+                    continue
                 all_day = False
                 optional_time_indicator = ""
                 try:
