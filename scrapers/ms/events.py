@@ -60,18 +60,41 @@ class SenateAgendaPdf(PdfPage):
                 time = time.replace(".", "").replace("am", "AM").replace("pm", "PM")
                 # AR is after recess, which is undefined
                 start_time = f"{date} {time}".replace("AR+", "").replace("AR", "")
+                # manual fix, turn "9: AM" into "9:00 AM"
+                start_time = re.sub(r"(\d+): (A|P)", r"\g<1>:00 \g<2>", start_time)
+                # wipe everything after AM/PM in case they forgot a seperator
+                start_time = re.sub(r"(.*[A|P]M).*", r"\1", start_time, flags=re.I)
+
+                all_day = False
                 try:
                     start_time = datetime.datetime.strptime(
                         start_time, "%B %d, %Y %I:%M %p"
                     )
+                    start_time = TZ.localize(start_time)
                 except Exception:
-                    start_time = dateutil.parser.parse(start_time)
+                    if "after" in start_time.lower():
+                        # Some events have a relative description of when they start
+                        # eg February 28, 2025 After Hwys
+                        # these should be treated as all_day events with no time component
+                        match = re.search(
+                            r"(.+)(\s+after.+)", start_time, re.IGNORECASE
+                        )
+                        start_time = match.group(1)
+                        start_time = dateutil.parser.parse(start_time)
+                        start_time = start_time.date()
+                        all_day = True
+                        after_description = match.group(2)
+                        event_title = f"{event_title} ({after_description.strip()})"
+                    else:
+                        start_time = dateutil.parser.parse(start_time)
+                        start_time = TZ.localize(start_time)
 
                 location = f"400 High St, Jackson, MS 39201, {room}"
                 event = Event(
                     name=event_title,
-                    start_date=TZ.localize(start_time),
+                    start_date=start_time,
                     location_name=location,
+                    all_day=all_day,
                 )
                 event.add_source(self.source.url)
                 event.add_document("Agenda", url=self.source.url, media_type="pdf")
