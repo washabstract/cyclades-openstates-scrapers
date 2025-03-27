@@ -47,6 +47,7 @@ ADD . /opt/openstates/openstates/
 
 ARG CRONOS_ENDPOINT
 ENV CRONOS_ENDPOINT=${CRONOS_ENDPOINT}
+ENV ARCHIVE_CACHE_TO_S3=true
 
 # the last step cleans out temporarily downloaded artifacts for poetry, shrinking our build
 RUN poetry install --no-root \
