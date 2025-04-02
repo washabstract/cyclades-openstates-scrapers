@@ -30,8 +30,9 @@ jobs:
         env:
           DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
+          CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
         run: |
-          docker build -t $DOCKER_IMAGE:$GITHUB_SHA -f Dockerfile . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT          
+          docker build -t $DOCKER_IMAGE:$GITHUB_SHA -f Dockerfile . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET       
           docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:latest
           docker push $DOCKER_IMAGE:$GITHUB_SHA
           docker push $DOCKER_IMAGE:latest
@@ -40,8 +41,9 @@ jobs:
         env:
           DOCKER_IMAGE_CA: ${{ secrets.DOCKER_IMAGE_CA }}
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
+          CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
         run: |
-          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT
+          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET
           docker tag $DOCKER_IMAGE_CA:$GITHUB_SHA $DOCKER_IMAGE_CA:latest
           docker push $DOCKER_IMAGE_CA:$GITHUB_SHA
           docker push $DOCKER_IMAGE_CA:latest
