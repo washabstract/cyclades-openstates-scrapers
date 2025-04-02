@@ -51,6 +51,10 @@ ARG CACHE_BUCKET
 ENV CACHE_BUCKET=${CACHE_BUCKET}
 ENV ARCHIVE_CACHE_TO_S3=true
 
+RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+  && unzip -q awscliv2.zip \
+  && ./aws/install \
+  && rm -rf aws awscliv2.zip
 # the last step cleans out temporarily downloaded artifacts for poetry, shrinking our build
 RUN poetry install --no-root \
     && rm -r /root/.cache/pypoetry/cache /root/.cache/pypoetry/artifacts/ \
