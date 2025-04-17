@@ -502,6 +502,7 @@ class MTBillScraper(Scraper):
                 "NO": 0,
                 "ABSENT": 0,
                 "EXCUSED": 0,
+                "ABSTAIN": 0,
             }
             for v in row["legislatorVotes"]:
                 vote_type_key = "voteType" if "voteType" in v else "committeeVote"
@@ -511,14 +512,38 @@ class MTBillScraper(Scraper):
                     counts["YES"] += 1
                 elif v[vote_type_key] in ("NO_EXCUSED", "NO_BY_PROXY", "NO_VOTE"):
                     counts["NO"] += 1
+                elif v[vote_type_key] in ("ABSTAIN", "ABSTAINED"):
+                    counts["ABSTAIN"] += 1
                 else:
-                    counts[v[vote_type_key]] += 1
+                    if v[vote_type_key] not in counts:
+                        self.warning(
+                            f"Unknown vote type {v[vote_type_key]} found at {vote_url}"
+                        )
+                    else:
+                        counts[v[vote_type_key]] += 1
 
             passed = counts["YES"] > counts["NO"]
 
             # regular vs committee votes
             if "billStatus" in row and row["billStatus"] and "id" in row["billStatus"]:
-                bill_action = self.actions_by_id[str(row["billStatus"]["id"])]
+                if str(row["billStatus"]["id"]) in self.actions_by_id:
+                    bill_action = self.actions_by_id[str(row["billStatus"]["id"])]
+                else:
+                    # somehow earlier part of scrape didn't find this action
+                    # see if we can find the action in the Vote's copy of the bill data
+                    action_names = [
+                        status["billStatusCode"]["name"]
+                        for status in row["bill"]["draft"]["billStatuses"]
+                        if status["id"] == row["billStatus"]["id"]
+                    ]
+                    if len(action_names) > 0:
+                        bill_action = action_names[0]
+                    else:
+                        self.warning(
+                            f"Unable to find Vote's bill action matching {str(row['billStatus']['id'])} on {vote_url}"
+                        )
+                        bill_action = None
+
                 chamber = (
                     "lower"
                     if row["billStatus"]["billStatusCode"]["chamber"] == "HOUSE"
@@ -592,8 +617,12 @@ class MTBillScraper(Scraper):
                     vote.vote("absent", voter)
                 elif v[vote_type_key] == "EXCUSED":
                     vote.vote("excused", voter)
+                elif v[vote_type_key] == "ABSTAINED":
+                    vote.vote("abstain", voter)
                 else:
-                    self.error(v)
-                    raise NotImplementedError
+                    self.warning(
+                        f"Could not match vote {vote_id} option for legislator vote: {v}"
+                    )
+                    vote.vote("other", voter)
 
             yield vote
