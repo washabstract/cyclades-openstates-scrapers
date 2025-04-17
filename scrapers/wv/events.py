@@ -104,6 +104,7 @@ class WVEventScraper(Scraper, LXMLMixin):
         when = re.sub(
             r", 30 Minutes Following House Floor Session", "", when, flags=re.IGNORECASE
         )
+        when = re.sub(r",?\s+After Floor", "", when, flags=re.IGNORECASE)
 
         when = when.split("-")[0]
         when = self.clean_date(when)
@@ -212,4 +213,6 @@ class WVEventScraper(Scraper, LXMLMixin):
         # ?Chart=agr&input=March%201,%202022
         if when == "March 1, 2022, PM":
             when = "March 1, 2022, 1:00 PM"
+
+        when = re.sub(r"\s+", " ", when)
         return when
