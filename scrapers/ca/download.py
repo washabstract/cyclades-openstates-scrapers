@@ -171,20 +171,12 @@ def load_bill_versions(connection):
     cursor.close()
 
 
-def load(folder, sql_name=partial(re.compile(r"\.dat$").sub, ".sql")):
+def load(folder):
     """
-    Import into mysql any .dat files located in `folder`.
-
-    First get a list of filenames like *.dat, then for each, execute
-    the corresponding .sql file after swapping out windows paths for
-    `folder`.
-
-    This function doesn't bother to delete the imported data files
-    afterwards; they'll be overwritten within a week, and leaving them
-    around makes testing easier (they're huge).
+    Load .dat files in the given folder using Python and manual inserts.
+    This avoids MySQL LOAD DATA issues and Docker crashes.
     """
-
-    logger.info("Loading data from %s..." % folder)
+    logger.info("Loading data from %s using Python inserts..." % folder)
     os.chdir(folder)
 
     connection = MySQLdb.connect(
@@ -192,35 +184,34 @@ def load(folder, sql_name=partial(re.compile(r"\.dat$").sub, ".sql")):
         user=MYSQL_USER,
         passwd=MYSQL_PASSWORD,
         db="capublic",
-        local_infile=1,
     )
     connection.autocommit(True)
+    cursor = connection.cursor()
 
-    filenames = glob.glob("*.dat")
+    for filepath in glob.glob("*.dat"):
+        table_name = filepath.replace(".dat", "").lower()
 
-    for filename in filenames:
-
-        # The corresponding sql file is in data/ca/dbadmin
-        _, filename = split(filename)
-        sql_filename = join("../pubinfo_load", sql_name(filename).lower())
-        with open(sql_filename) as f:
-
-            # Swap out windows paths.
-            script = f.read().replace(r"c:\\pubinfo\\", folder)
-
-        _, sql_filename = split(sql_filename)
-        logger.info("loading " + sql_filename)
-        if sql_filename == "bill_version_tbl.sql":
-            logger.info("inserting xml files (slow)")
+        if table_name == "bill_version_tbl":
+            logger.info("Using special handler for bill_version_tbl")
             load_bill_versions(connection)
-        else:
-            cursor = connection.cursor()
-            cursor.execute(script)
-            cursor.close()
+            continue
 
+        logger.info(f"Inserting rows into {table_name} from {filepath}")
+        with open(filepath) as f:
+            for line in f:
+                values = [None if v == "NULL" else v.strip("`") for v in line.strip().split("\t")]
+                placeholders = ", ".join(["%s"] * len(values))
+                sql = f"REPLACE INTO capublic.{table_name} VALUES ({placeholders})"
+                try:
+                    cursor.execute(sql, values)
+                except Exception as e:
+                    logger.error(f"Failed to insert into {table_name}: {e}")
+                    continue
+
+    cursor.close()
     connection.close()
     os.chdir("..")
-    logging.info("...Done loading from %s" % folder)
+    logger.info("All .dat files loaded")
 
 
 def db_create():
