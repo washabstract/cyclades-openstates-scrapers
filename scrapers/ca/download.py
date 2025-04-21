@@ -15,8 +15,9 @@ import logging
 import lxml.html
 import argparse
 from datetime import datetime
-from os.path import join, split
-from functools import partial
+
+# from os.path import join, split
+# from functools import partial
 from collections import namedtuple
 
 import requests
@@ -199,7 +200,10 @@ def load(folder):
         logger.info(f"Inserting rows into {table_name} from {filepath}")
         with open(filepath) as f:
             for line in f:
-                values = [None if v == "NULL" else v.strip("`") for v in line.strip().split("\t")]
+                values = [
+                    None if v == "NULL" else v.strip("`")
+                    for v in line.strip().split("\t")
+                ]
                 placeholders = ", ".join(["%s"] * len(values))
                 sql = f"REPLACE INTO capublic.{table_name} VALUES ({placeholders})"
                 try:
