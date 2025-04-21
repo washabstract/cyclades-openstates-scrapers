@@ -15,9 +15,6 @@ import logging
 import lxml.html
 import argparse
 from datetime import datetime
-
-# from os.path import join, split
-# from functools import partial
 from collections import namedtuple
 
 import requests
