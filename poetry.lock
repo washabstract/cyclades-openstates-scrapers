@@ -601,7 +601,7 @@ us = "^3.1.1"
 type = "git"
 url = "https://github.com/washabstract/cyclades-openstates-core"
 reference = "HEAD"
-resolved_reference = "725bd60b9efd0e406695903da75e968f01a43f8d"
+resolved_reference = "9ecf77b567dde90b1fbca04813ce62eafcccb73a"
 
 [[package]]
 name = "decorator"
