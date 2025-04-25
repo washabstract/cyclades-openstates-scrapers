@@ -23,6 +23,8 @@ jobs:
           poetry lock
           if ! diff -q poetry.lock poetry.lock.orig > /dev/null; then
             echo "Error: poetry.lock is out of sync. Please run 'poetry lock' and commit the changes."
+            echo "Differences:"
+            diff poetry.lock poetry.lock.orig
             exit 1
           fi
       - name: install dependencies
