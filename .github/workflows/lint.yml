@@ -8,23 +8,29 @@ on:
       - main
 jobs:
   lint:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: setup Python 3.9.13
+      - name: setup Python 3.9
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9.13"
+          python-version: "3.9"
       - name: install poetry
         run: pip install poetry==1.8.4 wheel
       - name: check poetry.lock consistency
         run: |
-          cp poetry.lock poetry.lock.orig
+          # Check dependency versions without platform-specific hashes
+          poetry export -f requirements.txt --without-hashes > requirements.orig.txt
+          # Create new lock file
           poetry lock
-          if ! diff -q poetry.lock poetry.lock.orig > /dev/null; then
-            echo "Error: poetry.lock is out of sync. Please run 'poetry lock' and commit the changes."
-            echo "Differences:"
-            diff -u poetry.lock poetry.lock.orig
+          # Export requirements from the new lock file
+          poetry export -f requirements.txt --without-hashes > requirements.new.txt
+          # Compare the actual dependencies rather than the raw lock files
+          if ! diff -q requirements.orig.txt requirements.new.txt > /dev/null; then
+            echo "Error: Dependencies in poetry.lock are out of sync with pyproject.toml."
+            echo "Please run 'poetry lock' and commit the changes."
+            echo "Dependency differences:"
+            diff -u requirements.orig.txt requirements.new.txt || true
             exit 1
           fi
       - name: install dependencies
