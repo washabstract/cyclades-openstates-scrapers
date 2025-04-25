@@ -20,9 +20,14 @@ jobs:
       - name: check poetry.lock consistency
         run: |
           cp poetry.lock poetry.lock.orig
-          poetry lock --no-update
+          poetry lock
           if ! diff -q poetry.lock poetry.lock.orig > /dev/null; then
             echo "Error: poetry.lock is out of sync. Please run 'poetry lock' and commit the changes."
+            cat << EOF > mismatch.log
+            The poetry.lock file in the repository does not match what would be generated
+            by running 'poetry lock'. Please run 'poetry lock' locally and commit the changes.
+            EOF
+            cat mismatch.log
             exit 1
           fi
       - name: install dependencies
