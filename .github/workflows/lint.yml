@@ -1,5 +1,4 @@
 name: Lint Python
-
 on:
   push:
     branches:
@@ -7,22 +6,28 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: setup Python 3.9
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.9"
-    - name: install poetry
-      run: pip install poetry wheel
-    - name: install dependencies
-      run: poetry install --only=dev --no-root
-    - name: flake8 check
-      run: poetry run flake8 scrapers scrapers_next
-    - name: black check
-      run: poetry run black --check --diff scrapers scrapers_next
+      - uses: actions/checkout@v3
+      - name: setup Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: install poetry
+        run: pip install poetry wheel
+      - name: check poetry.lock consistency
+        run: |
+          cp poetry.lock poetry.lock.orig
+          poetry lock --no-update
+          if ! diff -q poetry.lock poetry.lock.orig > /dev/null; then
+            echo "Error: poetry.lock is out of sync. Please run 'poetry lock' and commit the changes."
+            exit 1
+          fi
+      - name: install dependencies
+        run: poetry install --only=dev --no-root
+      - name: flake8 check
+        run: poetry run flake8 scrapers scrapers_next
+      - name: black check
+        run: poetry run black --check --diff scrapers scrapers_next
