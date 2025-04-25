@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.9"
       - name: install poetry
-        run: pip install poetry wheel
+        run: pip install poetry==1.8.4 wheel
       - name: check poetry.lock consistency
         run: |
           cp poetry.lock poetry.lock.orig
