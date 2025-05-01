@@ -209,17 +209,17 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.38.4"
+version = "1.38.6"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "boto3-1.38.4-py3-none-any.whl", hash = "sha256:ab315d38409f5b3262b653a10b0fac786bcff7e51e03dcb99ff38ba16bf85630"},
-    {file = "boto3-1.38.4.tar.gz", hash = "sha256:4990df0087fe7be944ba06c2d1e6512b5a24f821af5a4881f24309e13ae29e68"},
+    {file = "boto3-1.38.6-py3-none-any.whl", hash = "sha256:fe5bbd349310ef560b247e61453983ee6078ad4c2672620ca66bc0d29d64e728"},
+    {file = "boto3-1.38.6.tar.gz", hash = "sha256:9d764c402cadd112020812b9621a567058aa29d41a491d2d04b070be19ad5173"},
 ]
 
 [package.dependencies]
-botocore = ">=1.38.4,<1.39.0"
+botocore = ">=1.38.6,<1.39.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.12.0,<0.13.0"
 
@@ -228,13 +228,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.38.4"
+version = "1.38.6"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "botocore-1.38.4-py3-none-any.whl", hash = "sha256:6206cf07be1069efaead2ddc858eb752dafef276ebbe88ac32b5c427b1d90570"},
-    {file = "botocore-1.38.4.tar.gz", hash = "sha256:6143546bb56f1da4dff8d285cb6a3b8b0b6442451fe5937cb48a62bf7275386f"},
+    {file = "botocore-1.38.6-py3-none-any.whl", hash = "sha256:ccac197e444b7fcdc2ddbdafddddf9f82454a7e1f9d2a55ef9dcc0258b3b27e3"},
+    {file = "botocore-1.38.6.tar.gz", hash = "sha256:07e0721f6b1758183ed425f481a7af79e4897a3c02c2c486e101c576aee7377c"},
 ]
 
 [package.dependencies]
@@ -601,7 +601,7 @@ us = "^3.1.1"
 type = "git"
 url = "https://github.com/washabstract/cyclades-openstates-core"
 reference = "HEAD"
-resolved_reference = "9aa30856f1ae050af2d7b500e228dbf55fd654fe"
+resolved_reference = "9380cd3c942c251d49cff6aa3fcad020651f001b"
 
 [[package]]
 name = "decorator"
@@ -1247,13 +1247,13 @@ format-nongpl = ["idna", "jsonpointer (>1.13)", "rfc3339-validator", "rfc3986-va
 
 [[package]]
 name = "kafka-python"
-version = "2.2.0"
+version = "2.2.2"
 description = "Pure Python client for Apache Kafka"
 optional = false
 python-versions = "*"
 files = [
-    {file = "kafka_python-2.2.0-py2.py3-none-any.whl", hash = "sha256:49b1562cf9d34500a89f86ae958137b2ab7ae7ad279fdf83bb43e51472c291aa"},
-    {file = "kafka_python-2.2.0.tar.gz", hash = "sha256:335d8a5a5f20426c40078a880a4054afb6526e976d7da42ee455731a1eaaf1ba"},
+    {file = "kafka_python-2.2.2-py2.py3-none-any.whl", hash = "sha256:ae3877bf42ce5815c50da7fac26c9183df404e0a25ad7c4e44648bb14b466d53"},
+    {file = "kafka_python-2.2.2.tar.gz", hash = "sha256:ca413b61228169ee45d7855e87dad3924663c3a82fd4d190506e923dddf04cb8"},
 ]
 
 [package.extras]
@@ -2527,13 +2527,13 @@ urllib3 = ">=1.26,<2.0"
 
 [[package]]
 name = "setuptools"
-version = "80.0.0"
+version = "80.1.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "setuptools-80.0.0-py3-none-any.whl", hash = "sha256:a38f898dcd6e5380f4da4381a87ec90bd0a7eec23d204a5552e80ee3cab6bd27"},
-    {file = "setuptools-80.0.0.tar.gz", hash = "sha256:c40a5b3729d58dd749c0f08f1a07d134fb8a0a3d7f87dc33e7c5e1f762138650"},
+    {file = "setuptools-80.1.0-py3-none-any.whl", hash = "sha256:ea0e7655c05b74819f82e76e11a85b31779fee7c4969e82f72bab0664e8317e4"},
+    {file = "setuptools-80.1.0.tar.gz", hash = "sha256:2e308396e1d83de287ada2c2fd6e64286008fe6aca5008e0b6a8cb0e2c86eedd"},
 ]
 
 [package.extras]
