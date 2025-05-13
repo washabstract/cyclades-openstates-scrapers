@@ -1,5 +1,4 @@
 name: Lint Python
-
 on:
   push:
     branches:
@@ -7,22 +6,36 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: setup Python 3.9
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.9"
-    - name: install poetry
-      run: pip install poetry wheel
-    - name: install dependencies
-      run: poetry install --only=dev --no-root
-    - name: flake8 check
-      run: poetry run flake8 scrapers scrapers_next
-    - name: black check
-      run: poetry run black --check --diff scrapers scrapers_next
+      - uses: actions/checkout@v3
+      - name: setup Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: install poetry
+        run: pip install poetry==1.8.4 wheel
+      - name: check poetry.lock consistency
+        run: |
+          # Check dependency versions without platform-specific hashes
+          poetry export -f requirements.txt --without-hashes > requirements.orig.txt
+          # Create new lock file
+          poetry lock
+          # Export requirements from the new lock file
+          poetry export -f requirements.txt --without-hashes > requirements.new.txt
+          # Compare the actual dependencies rather than the raw lock files
+          if ! diff -q requirements.orig.txt requirements.new.txt > /dev/null; then
+            echo "Error: Dependencies in poetry.lock are out of sync with pyproject.toml."
+            echo "Please run 'poetry lock' and commit the changes."
+            echo "Dependency differences:"
+            diff -u requirements.orig.txt requirements.new.txt || true
+            exit 1
+          fi
+      - name: install dependencies
+        run: poetry install --only=dev --no-root
+      - name: flake8 check
+        run: poetry run flake8 scrapers scrapers_next
+      - name: black check
+        run: poetry run black --check --diff scrapers scrapers_next
