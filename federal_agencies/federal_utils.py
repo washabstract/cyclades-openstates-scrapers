@@ -1,5 +1,6 @@
 import requests
 from enum import Enum
+
 DEFAULT_FIELDS = [
     "pdf_url",
     "agencies",
@@ -13,6 +14,7 @@ DEFAULT_FIELDS = [
     "raw_text_url",
 ]
 
+
 class DocumentType(Enum):
     RULE = "RULE"
     PRORULE = "PRORULE"
@@ -20,7 +22,7 @@ class DocumentType(Enum):
     PRESDOCU = "PRESDOCU"
 
 
-def federal_scrape(
+def scrape_federal_agency(
     fields: dict = DEFAULT_FIELDS,
     exact_date: str = None,
     start_date: str = None,
@@ -74,4 +76,3 @@ def get_all_documents_recurse(url, params):
     else:
         print(f"Error: {response.json()}")
         return []
-

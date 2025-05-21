@@ -1,5 +1,5 @@
 from federal_scraper import (
-    federal_scrape,
+    scrape_federal_agency,
     write_out_scrape,
 )
 from federal_utils import DocumentType, DEFAULT_FIELDS
@@ -22,7 +22,7 @@ python agencies/federal_scraper.py \
 
 
 def scrape_executive_orders(start_date: str = None):
-    scrapes = federal_scrape(
+    scrapes = scrape_federal_agency(
         fields=DEFAULT_FIELDS + EXTRA_FIELDS,
         start_date=start_date,
         extra_params=EXTRA_PARAMS,
