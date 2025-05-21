@@ -31,7 +31,8 @@ def write_out_scrape(
             )
     else:
         for file in scraped_jsons:
-            with open(f"{output_dir}/{file[document_title]}.json", "w") as f:
+            document_title_value = file.get(document_title, file.get("document_number", "unknown"))
+            with open(f"{output_dir}/{document_title_value}.json", "w") as f:
                 f.write(json.dumps(file, indent=2))
         print(f"Wrote {len(scraped_jsons)} orders to individual files", file=sys.stderr)
 
