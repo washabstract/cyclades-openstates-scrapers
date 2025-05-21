@@ -1,4 +1,4 @@
-from federal_utils import federal_scrape, DEFAULT_FIELDS
+from federal_utils import scrape_federal_agency, DEFAULT_FIELDS
 import os
 import sys
 import json
@@ -81,21 +81,21 @@ def main():
 
     args = parser.parse_args()
 
-
     extra_params = {**json.loads(args.extra_params)}
     fields = args.fields.split(",") + args.extra_fields.split(",")
     print(f"Extra params: {extra_params}", file=sys.stderr)
     print(f"Fields: {fields}", file=sys.stderr)
 
-    # Get the executive orders
-    orders = federal_scrape(
+    scraped_documents = scrape_federal_agency(
         fields=args.fields.split(",") + args.extra_fields.split(","),
         exact_date=args.exact_date,
         start_date=args.start_date,
         extra_params=extra_params,
     )
 
-    write_out_scrape(orders, args.output_dir, args.group, args.document_title)
+    write_out_scrape(
+        scraped_documents, args.output_dir, args.group, args.document_title
+    )
 
 
 if __name__ == "__main__":
