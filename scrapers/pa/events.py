@@ -7,6 +7,7 @@ from openstates.scrape import Scraper, Event
 from . import utils
 
 
+# FYI: as of 2025 this should be run with --http-resilience
 class PAEventScraper(Scraper):
     _tz = pytz.timezone("US/Eastern")
 
