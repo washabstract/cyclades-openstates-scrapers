@@ -32,10 +32,10 @@ jobs:
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
           CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
           ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_ELASTIC_CLOUD_ID }}
-          ELASTIC_BASIC_AUTH_USERNAME: ${{ secrets.ELASTIC_BASIC_AUTH_USERNAME }}
-          ELASTIC_BASIC_AUTH_PASSWORD: ${{ secrets.ELASTIC_BASIC_AUTH_PASSWORD }}
+          ELASTIC_BASIC_AUTH_USER: ${{ secrets.ELASTIC_BASIC_AUTH_USER }}
+          ELASTIC_BASIC_AUTH_PASS: ${{ secrets.ELASTIC_BASIC_AUTH_PASS }}
         run: |
-          docker build -t $DOCKER_IMAGE:$GITHUB_SHA -f Dockerfile . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USERNAME=$ELASTIC_BASIC_AUTH_USERNAME --build-arg ELASTIC_BASIC_AUTH_PASSWORD=$ELASTIC_BASIC_AUTH_PASSWORD
+          docker build -t $DOCKER_IMAGE:$GITHUB_SHA -f Dockerfile . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
           docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:latest
           docker push $DOCKER_IMAGE:$GITHUB_SHA
           docker push $DOCKER_IMAGE:latest
@@ -46,10 +46,10 @@ jobs:
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
           CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
           ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_ELASTIC_CLOUD_ID }}
-          ELASTIC_BASIC_AUTH_USERNAME: ${{ secrets.ELASTIC_BASIC_AUTH_USERNAME }}
-          ELASTIC_BASIC_AUTH_PASSWORD: ${{ secrets.ELASTIC_BASIC_AUTH_PASSWORD }}
+          ELASTIC_BASIC_AUTH_USER: ${{ secrets.ELASTIC_BASIC_AUTH_USER }}
+          ELASTIC_BASIC_AUTH_PASS: ${{ secrets.ELASTIC_BASIC_AUTH_PASS }}
         run: |
-          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USERNAME=$ELASTIC_BASIC_AUTH_USERNAME --build-arg ELASTIC_BASIC_AUTH_PASSWORD=$ELASTIC_BASIC_AUTH_PASSWORD
+          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
           docker tag $DOCKER_IMAGE_CA:$GITHUB_SHA $DOCKER_IMAGE_CA:latest
           docker push $DOCKER_IMAGE_CA:$GITHUB_SHA
           docker push $DOCKER_IMAGE_CA:latest
@@ -64,7 +64,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: '3.11'
 
       - name: Get GitHub App Token
         uses: actions/create-github-app-token@v1
@@ -72,12 +72,12 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
-          owner: "washabstract"
+          owner: 'washabstract'
 
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          repository: "washabstract/artemis"
+          repository: 'washabstract/artemis'
           token: ${{ steps.app-token.outputs.token }}
           ref: main
 
