@@ -76,3 +76,22 @@ def get_all_documents_recurse(url, params):
     else:
         print(f"Error: {response.json()}")
         return []
+
+def send_doc_to_kafka(doc_dict: dict, topic: str):
+    """
+    Send a document dictionary to a Kafka topic.
+    
+    :param doc_dict: Dictionary containing document data.
+    :param topic: Kafka topic to send the document to.
+    """
+    from kafka import KafkaProducer
+    import json
+
+    producer = KafkaProducer(
+        bootstrap_servers='localhost:9092',
+        value_serializer=lambda v: json.dumps(v).encode('utf-8')
+    )
+
+    producer.send(topic, doc_dict)
+    producer.flush()
+    producer.close()
