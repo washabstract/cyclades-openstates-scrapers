@@ -118,10 +118,7 @@ def send_doc_to_kafka(doc_dict: dict, topic: str, kafka_producer: KafkaProducer 
     """
 
     if not kafka_producer:
-        kafka_producer = KafkaProducer(
-            bootstrap_servers=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"),
-            value_serializer=lambda v: json.dumps(v).encode("utf-8"),
-        )
+        kafka_producer = init_kafka_producer(os.getenv("KAFKA_CLUSTER_NAME", ""))
 
     kafka_producer.send(topic, doc_dict)
     kafka_producer.flush()
