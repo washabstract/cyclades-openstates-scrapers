@@ -1,4 +1,4 @@
-from federal_utils import scrape_federal_agency, DEFAULT_FIELDS
+from federal_utils import scrape_federal_agency, DEFAULT_FIELDS, send_doc_to_kafka
 import os
 import sys
 import json
@@ -77,6 +77,12 @@ def main():
     )
 
     parser.add_argument(
+        "--kafka",
+        help="If set, will send the documents to Kafka at the given topic instead of writing them out (i.e '--kafka <topic>')",
+        default=None
+    )
+
+    parser.add_argument(
         "--output-dir", help="Directory to save the output files", default="fed_scrapes"
     )
 
@@ -94,9 +100,16 @@ def main():
         extra_params=extra_params,
     )
 
-    write_out_scrape(
-        scraped_documents, args.output_dir, args.group, args.document_title
-    )
+    if args.kafka:
+        for doc in scraped_documents:
+            send_doc_to_kafka(doc, topic=args.kafka)
+            print(f"Sent document {doc.get(args.document_title)} to Kafka")
+        return
+    
+    else:
+        write_out_scrape(
+            scraped_documents, args.output_dir, args.group, args.document_title
+        )
 
 
 if __name__ == "__main__":
