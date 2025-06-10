@@ -1,5 +1,9 @@
 import requests
 from enum import Enum
+import boto3
+from kafka import KafkaProducer
+import json
+import os
 
 DEFAULT_FIELDS = [
     "pdf_url",
@@ -77,21 +81,48 @@ def get_all_documents_recurse(url, params):
         print(f"Error: {response.json()}")
         return []
 
-def send_doc_to_kafka(doc_dict: dict, topic: str):
+
+def init_kafka_producer(kafka_cluster_name: str) -> KafkaProducer:
+    client = boto3.client("kafka", region_name="us-west-2")
+
+    # Grab Cluster Arn
+    clusters = client.list_clusters()["ClusterInfoList"]
+    cluster_arn = None
+    for cluster in clusters:
+        if cluster["ClusterName"] == kafka_cluster_name:
+            cluster_arn = cluster["ClusterArn"]
+            break
+
+    if cluster_arn is None:
+        raise ValueError(f"No Kafka cluster found with name: {kafka_cluster_name}")
+
+    # Grab Brokers
+    response = client.get_bootstrap_brokers(ClusterArn=cluster_arn)
+    kafka_brokers = response["BootstrapBrokerStringTls"]
+
+    producer = KafkaProducer(
+        security_protocol="SSL",
+        bootstrap_servers=kafka_brokers,
+        value_serializer=lambda v: json.dumps(v, json.dumps(v).encode("utf-8")),
+    )
+
+    return producer
+
+
+def send_doc_to_kafka(doc_dict: dict, topic: str, kafka_producer: KafkaProducer = None):
     """
     Send a document dictionary to a Kafka topic.
-    
+
     :param doc_dict: Dictionary containing document data.
     :param topic: Kafka topic to send the document to.
     """
-    from kafka import KafkaProducer
-    import json
 
-    producer = KafkaProducer(
-        bootstrap_servers='localhost:9092',
-        value_serializer=lambda v: json.dumps(v).encode('utf-8')
-    )
+    if not kafka_producer:
+        kafka_producer = KafkaProducer(
+            bootstrap_servers=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"),
+            value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+        )
 
-    producer.send(topic, doc_dict)
-    producer.flush()
-    producer.close()
+    kafka_producer.send(topic, doc_dict)
+    kafka_producer.flush()
+    kafka_producer.close()
