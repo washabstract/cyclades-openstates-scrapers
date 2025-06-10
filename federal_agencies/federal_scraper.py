@@ -1,4 +1,9 @@
-from federal_utils import scrape_federal_agency, DEFAULT_FIELDS, send_doc_to_kafka
+from federal_utils import (
+    scrape_federal_agency,
+    DEFAULT_FIELDS,
+    send_doc_to_kafka,
+    init_kafka_producer,
+)
 import os
 import sys
 import json
@@ -101,8 +106,9 @@ def main():
     )
 
     if args.kafka:
+        kakfa_producer = init_kafka_producer(args.kafka)
         for doc in scraped_documents:
-            send_doc_to_kafka(doc, topic=args.kafka)
+            send_doc_to_kafka(doc, topic=args.kafka, kakfa_producer=kakfa_producer)
             print(f"Sent document {doc.get(args.document_title)} to Kafka")
         return
     
