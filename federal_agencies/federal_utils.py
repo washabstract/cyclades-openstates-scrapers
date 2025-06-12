@@ -108,6 +108,16 @@ def init_kafka_producer(kafka_cluster_name: str) -> KafkaProducer:
 
     return producer
 
+def init_local_kafka_producer() -> KafkaProducer:
+    """
+    Initialize a local Kafka producer for testing purposes.
+    """
+    return KafkaProducer(
+        security_protocol="PLAINTEXT",
+        bootstrap_servers="localhost:9092",
+        value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+    )
+
 
 def send_doc_to_kafka(doc_dict: dict, topic: str, kafka_producer: KafkaProducer = None):
     """
@@ -118,7 +128,7 @@ def send_doc_to_kafka(doc_dict: dict, topic: str, kafka_producer: KafkaProducer 
     """
 
     if not kafka_producer:
-        kafka_producer = init_kafka_producer(os.getenv("KAFKA_CLUSTER_NAME", ""))
+        kafka_producer = init_local_kafka_producer()
 
     kafka_producer.send(topic, doc_dict)
     kafka_producer.flush()
