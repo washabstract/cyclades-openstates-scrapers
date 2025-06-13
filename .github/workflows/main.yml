@@ -31,7 +31,7 @@ jobs:
           DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
           CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
-          ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_ELASTIC_CLOUD_ID }}
+          ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_CLOUD_ID }}
           ELASTIC_BASIC_AUTH_USER: ${{ secrets.ELASTIC_BASIC_AUTH_USER }}
           ELASTIC_BASIC_AUTH_PASS: ${{ secrets.ELASTIC_BASIC_AUTH_PASS }}
         run: |
@@ -45,7 +45,7 @@ jobs:
           DOCKER_IMAGE_CA: ${{ secrets.DOCKER_IMAGE_CA }}
           CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
           CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
-          ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_ELASTIC_CLOUD_ID }}
+          ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_CLOUD_ID }}
           ELASTIC_BASIC_AUTH_USER: ${{ secrets.ELASTIC_BASIC_AUTH_USER }}
           ELASTIC_BASIC_AUTH_PASS: ${{ secrets.ELASTIC_BASIC_AUTH_PASS }}
         run: |
