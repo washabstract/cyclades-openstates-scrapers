@@ -59,7 +59,7 @@ ENV ELASTIC_BASIC_AUTH_USER=${ELASTIC_BASIC_AUTH_USER}
 ARG ELASTIC_BASIC_AUTH_PASS
 ENV ELASTIC_BASIC_AUTH_PASS=${ELASTIC_BASIC_AUTH_PASS}
 
-ENV ARCHIVE_CACHE_TO_S3=true
+ENV ARCHIVE_CACHE_TO_S3=false
 
 RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
   && unzip -q awscliv2.zip \
