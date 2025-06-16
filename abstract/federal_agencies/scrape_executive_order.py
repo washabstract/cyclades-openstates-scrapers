@@ -1,8 +1,12 @@
-from federal_scraper import (
+from abstract.federal_agencies.federal_scraper import (
     scrape_federal_agency,
     write_out_scrape,
 )
-from federal_utils import DocumentType, DEFAULT_FIELDS, send_doc_to_kafka
+from abstract.utils import (
+    DocumentType,
+    DEFAULT_FIELDS,
+    send_doc_to_kafka,
+)
 import argparse
 
 EXTRA_FIELDS = ["executive_order_number", "presidential_document_number"]
@@ -33,13 +37,13 @@ def scrape_executive_orders(start_date: str = None, kafka_topic: str = None):
         for doc in scrapes:
             send_doc_to_kafka(doc, topic="EO")
             print(f"Sent document {doc.get('executive_order_number')} to Kafka")
-    
+
     else:
         write_out_scrape(
-        scraped_jsons=scrapes,
-        output_dir=OUTPUT_DIR,
-        document_title=DOCUMENT_HEADER,
-    )
+            scraped_jsons=scrapes,
+            output_dir=OUTPUT_DIR,
+            document_title=DOCUMENT_HEADER,
+        )
 
 
 if __name__ == "__main__":
