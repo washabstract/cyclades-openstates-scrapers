@@ -3,7 +3,6 @@ from enum import Enum
 import boto3
 from kafka import KafkaProducer
 import json
-import os
 
 DEFAULT_FIELDS = [
     "pdf_url",
