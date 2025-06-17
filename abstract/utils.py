@@ -65,7 +65,7 @@ def init_kafka_producer(kafka_cluster_name: str) -> KafkaProducer:
     producer = KafkaProducer(
         security_protocol="SSL",
         bootstrap_servers=kafka_brokers,
-        value_serializer=lambda v: json.dumps(v, json.dumps(v).encode("utf-8")),
+        value_serializer=lambda v: json.dumps(v).encode("utf-8"),
     )
 
     return producer
@@ -94,4 +94,3 @@ def send_doc_to_kafka(doc_dict: dict, topic: str, kafka_producer: KafkaProducer 
 
     kafka_producer.send(topic, doc_dict)
     kafka_producer.flush()
-    kafka_producer.close()

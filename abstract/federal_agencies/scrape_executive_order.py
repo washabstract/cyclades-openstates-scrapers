@@ -1,6 +1,7 @@
 from abstract.federal_agencies.federal_scraper import (
     scrape_federal_agency,
     write_out_scrape,
+    init_kafka_producer,
 )
 from abstract.utils import (
     DocumentType,
@@ -26,17 +27,20 @@ python agencies/federal_scraper.py \
 """
 
 
-def scrape_executive_orders(start_date: str = None, kafka_topic: str = None):
+def scrape_executive_orders(
+    start_date: str = None, kafka_producer: str = "iris-kafka-cluster"):
     scrapes = scrape_federal_agency(
         fields=DEFAULT_FIELDS + EXTRA_FIELDS,
         start_date=start_date,
         extra_params=EXTRA_PARAMS,
     )
 
-    if kafka_topic:
+    if kafka_producer:
+        producer = init_kafka_producer(kafka_producer)
         for doc in scrapes:
-            send_doc_to_kafka(doc, topic="EO")
+            send_doc_to_kafka(doc, topic="EO", kafka_producer=producer)
             print(f"Sent document {doc.get('executive_order_number')} to Kafka")
+        producer.close()
 
     else:
         write_out_scrape(
@@ -56,7 +60,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--kafka",
-        help="If set, will send the documents to Kafka at the given topic instead of writing them out (i.e '--kafka <topic>')",
+        help="If set, will send the documents to Kafka at the given producer instead of writing them out (i.e '--kafka <topic>')",
         default=None,
     )
 
@@ -64,5 +68,5 @@ if __name__ == "__main__":
 
     scrape_executive_orders(
         start_date=args.start_date,
-        kafka_topic=args.kafka if args.kafka else None,
+        kafka_producer=args.kafka if args.kafka else None,
     )
