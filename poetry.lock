@@ -1776,6 +1776,38 @@ files = [
 et-xmlfile = "*"
 
 [[package]]
+name = "openstates"
+version = "6.24.2"
+description = "core infrastructure for the openstates project"
+optional = false
+python-versions = "<4.0,>=3.9"
+files = [
+    {file = "openstates-6.24.2-py3-none-any.whl", hash = "sha256:264a131953f8bef9dd9dadaa9eaa90f6c5c708eca8ef0d424ae62ae36d9759b2"},
+    {file = "openstates-6.24.2.tar.gz", hash = "sha256:e4edcdc047b76065ad986f9831af5d7a1130f730476f82dd38897161c0e181c1"},
+]
+
+[package.dependencies]
+attrs = ">=20.2.0,<21.0.0"
+boto3 = ">=1.26.61,<2.0.0"
+chardet = ">=3.0,<4.0"
+click = ">=8.0,<9.0"
+dj_database_url = ">=0.5.0,<0.6.0"
+Django = "3.2.14"
+gitpython = ">=3.1.44,<4.0.0"
+google-cloud-storage = ">=2.18.0,<3.0.0"
+influxdb-client = ">=1.37.0,<2.0.0"
+jsonschema = ">=3.2.0,<4.0.0"
+psycopg2-binary = ">=2.8.4,<3.0.0"
+pydantic = ">=1.8.2,<2.0.0"
+PyJWT = ">=2.5.0,<3.0.0"
+pytz = ">=2024.1,<2025.0"
+PyYAML = ">=6.0,<7.0"
+scrapelib = ">=2.0.7,<3.0.0"
+spatula = ">=0.8.9,<1.0"
+textract = ">=1.6,<2.0"
+us = ">=3.1.1,<4.0.0"
+
+[[package]]
 name = "pandas"
 version = "2.3.0"
 description = "Powerful data structures for data analysis, time series, and statistics"
@@ -3217,4 +3249,4 @@ california = ["SQLAlchemy", "mysqlclient"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.9"
-content-hash = "19c4c300d1aafcdb15e992f4bc46ca8e947822fcfb64513690a41d74f63a9573"
+content-hash = "d3179c84e36c42253498e5c6ac6c734e99722e2ecd5dd7ed91129f048628d615"
