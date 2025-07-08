@@ -19,11 +19,11 @@ def save_json_locally(document_id, agency_id, content, out_dir="regulations"):
         json.dump(content, f, indent=2)
     logger.info(f"Saved: {filepath}")
 
-def fetch_documents(start_date, end_date, document_type, agency_id, kafka_cluster=None, api_key=API_KEY):
+def fetch_documents(start_date, end_date, document_type, agency_id, api_key, kafka_cluster=None):
     BASE_URL = "https://api.regulations.gov/v4"
 
     doc_params = {
-        "api_key": API_KEY,
+        "api_key": api_key,
         "filter[postedDate][ge]": start_date,
         "filter[postedDate][le]": end_date,
         "include": "attachments",
@@ -82,7 +82,7 @@ def fetch_documents(start_date, end_date, document_type, agency_id, kafka_cluste
 if __name__ == "__main__":
     today = datetime.utcnow().date()
     yesterday = today - timedelta(days=1)
-    API_KEY = get_secret("REGULATIONS.GOV_API_KEY")
+    api_key = get_secret("REGULATIONS.GOV_API_KEY")
 
     parser = argparse.ArgumentParser(description="Regulations.gov scraper")
     parser.add_argument("--start-date", default=yesterday.isoformat(), help="Posted date start (YYYY-MM-DD)")
@@ -98,6 +98,6 @@ if __name__ == "__main__":
         end_date=args.end_date,
         document_type=args.document_type,
         agency_id=args.agency_id,
-        kafka_cluster=args.kafka_cluster,
-        api_key=API_KEY
+        api_key=api_key,
+        kafka_cluster=args.kafka_cluster
     )
