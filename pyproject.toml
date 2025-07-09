@@ -23,8 +23,9 @@ cryptography = "^37.0.2"
 ics = "^0.7.2"
 pymupdf = "^1.23.8"
 pandas = "^2.1.4"
-cyclades = { git = "https://github.com/washabstract/cyclades-openstates-core" }
+cyclades = { git = "https://github.com/washabstract/cyclades-openstates-core", branch = "local_kafka_testing" }
 kafka-python = "^2.0.2"
+six = "1.12.0"
 
 [tool.poetry.extras]
 california = ["mysqlclient", "SQLAlchemy"]

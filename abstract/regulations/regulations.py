@@ -59,7 +59,7 @@ def fetch_documents(start_date, end_date, document_type, agency_id, api_key, kaf
             doc_id = doc["id"]
             doc_response = requests.get(
                 f"{BASE_URL}/documents/{doc_id}",
-                params={"api_key": API_KEY, "include": "attachments"}
+                params={"api_key": api_key, "include": "attachments"}
             )
             if doc_response.status_code == 200:
                 doc_data = doc_response.json()
