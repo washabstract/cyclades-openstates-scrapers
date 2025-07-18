@@ -79,6 +79,7 @@ class USBillScraper(Scraper):
         "Resolution Agreed to": "pass",
         "Resolution of Ratification Agreed to": "pass",
         "Veto Sustained": "fail",
+        "Motion to Recommit Rejected": "fail",
     }
 
     classifications = {
