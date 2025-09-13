@@ -10,7 +10,18 @@ This repository contains the code responsible for scraping bills & votes for Ope
 * [Code of Conduct](https://docs.openstates.org/code-of-conduct/)
 
 
-# Addressing Issues
+## Deploying a change
+
+1. Merge code to `main`
+2. CI Workflow triggers - updates ECR Image
+3. This opens a PR to Artemis (the airflow Repo)
+4. Merge the Artemis PR
+5. Artemis update the ECR Image tag
+6. Wait for deploy
+7. Trigger the failed DAG here: https://55bd462a-55fa-406a-ae6d-97b3240bb34c.c8.us-west-2.airflow.amazonaws.com/home
+
+
+## Addressing Issues
 
 Some problems will arise because we are out of sync with the main openstates branch, if you need just one commit, consider the following:
 
