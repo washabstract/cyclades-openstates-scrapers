@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.9"
       - name: install poetry
-        run: pip install poetry
+        run: pip install poetry poetry-plugin-export
       - name: check poetry.lock consistency
         run: |
           # Check dependency versions without platform-specific hashes
