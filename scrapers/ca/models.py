@@ -261,8 +261,12 @@ class CAVoteSummary(Base):
             filter(
                 lambda v: v.bill_version_action_date <= self.vote_date_time,
                 self.bill.versions,
-            )
+            ),
+            None, # Adding in 'None' if version is not found
         )
+
+        if not version:
+            return None # Not including a vote threshold if version not found
 
         if version.vote_required == "Majority":
             return "1/2"
