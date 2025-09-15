@@ -60,9 +60,9 @@ This preserves the original commit message and author while applying the changes
 
 To work with the California scraper locally, you can build and run the Dockerfile.california image.
 
-1. Build the CA image
+1. **Build the CA image**
 
-Make sure you are in the project root and run:
+    Make sure you are in the project root and run the below. This mirrors the arguments used in CI so your local image matches what’s deployed.
 
 ```
 docker build \
@@ -76,9 +76,7 @@ docker build \
   --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
 ```
 
-This mirrors the arguments used in CI so your local image matches what’s deployed.
-
-2. Enter the container
+2. **Enter the container**
 
 ```
 docker run -it --rm \
@@ -88,18 +86,16 @@ docker run -it --rm \
   /bin/bash
 ```
 
-You’ll land in /opt/openstates/openstates.
+3. **Run a test scrape**
 
-3. Run a test scrape
-
-Inside the container, you can trigger the CA scraper manually. For example:
+    Inside the container, you can trigger the CA scraper manually. For example:
 
 ```
-        sed -i "s/user[[:space:]]*= mysql/user = root/" /etc/mysql/mariadb.conf.d/50-server.cnf && \
-        mysql_install_db --user=root && \
-        mkdir -p /run/mysqld && \
-        mysqld --user=root --max_allowed_packet=512M & \
-        sleep 5 && \
-        /opt/openstates/openstates/scrapers/ca/download.sh && \
-        poetry run os-update ca bills --fastmode --scrape
+sed -i "s/user[[:space:]]*= mysql/user = root/" /etc/mysql/mariadb.conf.d/50-server.cnf && \
+mysql_install_db --user=root && \
+mkdir -p /run/mysqld && \
+mysqld --user=root --max_allowed_packet=512M & \
+sleep 5 && \
+/opt/openstates/openstates/scrapers/ca/download.sh && \
+poetry run os-update ca bills --fastmode --scrape
 ```
