@@ -10,6 +10,7 @@ from . import utils
 # FYI: as of 2025 this should be run with --http-resilience
 class PAEventScraper(Scraper):
     _tz = pytz.timezone("US/Eastern")
+    verify = False
 
     def scrape(self, chamber=None):
         chambers = [chamber] if chamber is not None else ["upper", "lower"]
@@ -20,7 +21,7 @@ class PAEventScraper(Scraper):
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
         headers = {"User-Agent": user_agent}
         url = utils.urls["events"][chamber]
-        page = self.get(url, headers=headers).text
+        page = self.get(url, verify=False).text
         page = lxml.html.fromstring(page)
         page.make_links_absolute(url)
 
