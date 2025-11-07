@@ -609,7 +609,7 @@ class MNBillScraper(Scraper, LXMLMixin):
 
     def extract_versions(self, bill, doc):
         # Get all versions of the bill.
-        version_rows = doc.xpath("//div[@id='versions']/table/tr[td]")
+        version_rows = doc.xpath("//div[@id='versions']//table//tbody/tr")
 
         # If there is NOT a 'Version List' expander to show versions table,
         #  this gets versions from link on page that follows the label
@@ -699,9 +699,14 @@ class MNBillScraper(Scraper, LXMLMixin):
         for row in version_rows:
             html_link = row.xpath("td[1]/a")[0]
             version_title = html_link.text_content().strip().replace("  ", " ")
-            version_day = row.xpath("td[3]/text()")[0].strip()
-            version_day = version_day.replace("Posted on", "").strip()
-            version_day = datetime.datetime.strptime(version_day, "%m/%d/%Y").date()
+            version_day_text = row.xpath("normalize-space(td[contains(., 'Posted on')]/text())")
+            if version_day_text:
+                version_day = version_day_text.replace("Posted on", "").strip()
+                version_day = datetime.datetime.strptime(version_day, "%m/%d/%Y").date()
+            else:
+                self.warning(f"No date found for version row in {bill.identifier}")
+                continue
+
             html_url = html_link.xpath("@href")[0]
             bill.add_version_link(
                 version_title,
@@ -710,8 +715,9 @@ class MNBillScraper(Scraper, LXMLMixin):
                 media_type="text/html",
                 on_duplicate="ignore",
             )
-            if row.xpath("td[2]/a[@aria-label='PDF document']"):
-                pdf_url = row.xpath("td[2]/a[@aria-label='PDF document']/@href")[0]
+            pdf_links = row.xpath(".//a[contains(@href, '/pdf/')]/@href")
+            if pdf_links:
+                pdf_url = pdf_links[0]
                 bill.add_version_link(
                     version_title,
                     pdf_url,
@@ -719,6 +725,8 @@ class MNBillScraper(Scraper, LXMLMixin):
                     media_type="application/pdf",
                     on_duplicate="ignore",
                 )
+            else:
+                self.warning(f"No PDF found for {bill.identifier} version {version_title}")
 
         return bill
 
