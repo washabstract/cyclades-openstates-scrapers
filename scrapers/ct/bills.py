@@ -147,6 +147,10 @@ class CTBillScraper(Scraper):
             self.action_list[bill_id].append(row)
 
     def scrape_actions(self, bill: Bill, initial_chamber: str):
+        # Check if bill has actions in the history; if not, return early
+        if bill.identifier not in self.action_list:
+            self.warning(f"No actions found for {bill.identifier}")
+            return
 
         actions = self.action_list[bill.identifier]
         actions.sort(key=itemgetter("act_date"))
