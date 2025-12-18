@@ -9,7 +9,7 @@ class Tennessee(State):
         "bills": TNBillScraper,
         "events": TNEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         # {
         #     "_scraped_name": "106th General Assembly",
         #     "classification": "primary",

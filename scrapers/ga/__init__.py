@@ -9,7 +9,7 @@ class Georgia(State):
         "bills": GABillScraper,
         "events": GAEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2011-2012 Regular Session",
             "identifier": "2011_12",

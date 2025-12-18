@@ -8,7 +8,7 @@ class WestVirginia(State):
         "bills": WVBillScraper,
         "events": WVEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2011",
             "classification": "primary",

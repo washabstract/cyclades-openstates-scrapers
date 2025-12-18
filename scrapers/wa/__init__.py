@@ -10,7 +10,7 @@ class Washington(State):
         "events": WAEventScraper,
         "bills": WABillScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2009",
             "identifier": "2009",

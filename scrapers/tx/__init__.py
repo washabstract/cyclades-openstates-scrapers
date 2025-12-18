@@ -12,7 +12,7 @@ class Texas(State):
         "votes": TXVoteScraper,
         "events": TXEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "81(R) - 2009",
             "classification": "primary",

@@ -10,7 +10,7 @@ class Utah(State):
         "events": UTEventScraper,
         "bills": UTBillScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2011 General Session",
             "classification": "primary",

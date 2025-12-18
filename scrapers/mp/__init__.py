@@ -12,7 +12,7 @@ class NorthernMarianaIslands(State):
         "events": MPEventScraper,
     }
     # sessions before 37th are missing many labels
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "23",
             "identifier": "23",

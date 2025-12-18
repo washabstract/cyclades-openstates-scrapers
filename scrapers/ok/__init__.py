@@ -16,7 +16,7 @@ class Oklahoma(State):
     #   - update the `_scraped_name`
     #   - update the session slug in the Bill scraper
     #   - ignore the odd-year session
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2012 Regular Session",
             "identifier": "2011-2012",

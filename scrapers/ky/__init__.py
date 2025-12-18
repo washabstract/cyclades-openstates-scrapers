@@ -10,7 +10,7 @@ class Kentucky(State):
         "bills": KYBillScraper,
         "events": KYEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2011 Regular Session",
             "classification": "primary",

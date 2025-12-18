@@ -11,7 +11,7 @@ class Arizona(State):
         "events": AZEventScraper,
         "bills": AZBillScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2009 - Forty-ninth Legislature - First Regular Session",
             "classification": "primary",

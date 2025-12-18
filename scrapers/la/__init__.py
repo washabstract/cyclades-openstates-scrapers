@@ -9,7 +9,7 @@ class Louisiana(State):
         "events": LAEventScraper,
         "bills": LABillScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2009 Regular Session",
             "classification": "primary",

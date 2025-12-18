@@ -10,7 +10,7 @@ class Delaware(State):
         "bills": DEBillScraper,
         "events": DEEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "1998 - 2000 (GA 140)",
             "identifier": "140",

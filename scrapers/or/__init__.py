@@ -10,7 +10,7 @@ class Oregon(State):
         "votes": ORVoteScraper,
         "events": OREventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2007 Regular Session",
             "identifier": "2007 Regular Session",

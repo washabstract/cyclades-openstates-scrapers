@@ -17,7 +17,7 @@ class NorthDakota(State):
         "events_web": NDEventScraper,
         "events": NDEventsCSVScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "62nd Legislative Assembly (2011-12)",
             "identifier": "62",
