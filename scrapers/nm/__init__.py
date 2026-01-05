@@ -232,6 +232,15 @@ class NewMexico(State):
             "start_date": "2025-11-10",
             # TODO: Correct end date
             "end_date": "2025-11-17",
+            "active": False,
+        },
+        {
+            "_scraped_name": "2026 Regular",
+            "classification": "primary",
+            "identifier": "2026",
+            "name": "2026 Regular Session",
+            "start_date": "2026-01-20",
+            "end_date": "2026-02-19",
             "active": True,
         },
     ]
