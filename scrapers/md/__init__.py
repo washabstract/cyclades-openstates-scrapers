@@ -232,6 +232,7 @@ class Maryland(State):
         "2005 Regular Session",
         "2006 Regular Session",
         "2006 Special Session 1",
+        "2025 Special Session",
     ]
 
     def get_session_list(self):
