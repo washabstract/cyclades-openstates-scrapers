@@ -12,7 +12,7 @@ class Pennsylvania(State):
         "bills": PABillScraper,
         "events": PAEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2009-2010 Regular Session",
             "classification": "primary",

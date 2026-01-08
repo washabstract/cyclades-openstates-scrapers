@@ -15,7 +15,7 @@ class UnitedStates(State):
         "bills": USBillScraper,
         # "votes": USVoteScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "classification": "primary",
             "identifier": "115",

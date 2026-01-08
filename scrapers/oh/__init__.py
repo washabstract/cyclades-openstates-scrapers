@@ -10,7 +10,7 @@ class Ohio(State):
         "events": OHEventScraper,
         "bills": OHBillScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "131st (2015-2016)",
             "identifier": "131",

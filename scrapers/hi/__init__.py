@@ -12,7 +12,7 @@ class Hawaii(State):
         "bills": HIBillScraper,
         "events": HIEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2012",
             "identifier": "2011 Regular Session",

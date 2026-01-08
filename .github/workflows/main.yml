@@ -29,13 +29,12 @@ jobs:
       - name: Build and push cyclades-scrapers image to Amazon ECR
         env:
           DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
-          CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
           CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
           ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_CLOUD_ID }}
           ELASTIC_BASIC_AUTH_USER: ${{ secrets.ELASTIC_BASIC_AUTH_USER }}
           ELASTIC_BASIC_AUTH_PASS: ${{ secrets.ELASTIC_BASIC_AUTH_PASS }}
         run: |
-          docker build -t $DOCKER_IMAGE:$GITHUB_SHA -f Dockerfile . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
+          docker build -t $DOCKER_IMAGE:$GITHUB_SHA -f Dockerfile . --platform linux/amd64 --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
           docker tag $DOCKER_IMAGE:$GITHUB_SHA $DOCKER_IMAGE:latest
           docker push $DOCKER_IMAGE:$GITHUB_SHA
           docker push $DOCKER_IMAGE:latest
@@ -43,13 +42,12 @@ jobs:
       - name: Build and push cyclades-scrapers-ca image to Amazon ECR
         env:
           DOCKER_IMAGE_CA: ${{ secrets.DOCKER_IMAGE_CA }}
-          CRONOS_ENDPOINT: ${{ secrets.CRONOS_ENDPOINT }}
           CACHE_BUCKET: ${{ secrets.CACHE_BUCKET }}
           ELASTIC_CLOUD_ID: ${{ secrets.ELASTIC_CLOUD_ID }}
           ELASTIC_BASIC_AUTH_USER: ${{ secrets.ELASTIC_BASIC_AUTH_USER }}
           ELASTIC_BASIC_AUTH_PASS: ${{ secrets.ELASTIC_BASIC_AUTH_PASS }}
         run: |
-          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64 --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
+          docker build -t $DOCKER_IMAGE_CA:$GITHUB_SHA -f Dockerfile.california . --platform linux/amd64 --build-arg CACHE_BUCKET=$CACHE_BUCKET --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER --build-arg ELASTIC_BASIC_AUTH_PASS=$ELASTIC_BASIC_AUTH_PASS
           docker tag $DOCKER_IMAGE_CA:$GITHUB_SHA $DOCKER_IMAGE_CA:latest
           docker push $DOCKER_IMAGE_CA:$GITHUB_SHA
           docker push $DOCKER_IMAGE_CA:latest

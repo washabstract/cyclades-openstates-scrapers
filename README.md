@@ -69,7 +69,6 @@ docker build \
   -t cyclades-scrapers-ca:local \
   -f Dockerfile.california . \
   --platform linux/amd64 \
-  --build-arg CRONOS_ENDPOINT=$CRONOS_ENDPOINT \
   --build-arg CACHE_BUCKET=$CACHE_BUCKET \
   --build-arg ELASTIC_CLOUD_ID=$ELASTIC_CLOUD_ID \
   --build-arg ELASTIC_BASIC_AUTH_USER=$ELASTIC_BASIC_AUTH_USER \

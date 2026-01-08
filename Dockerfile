@@ -45,8 +45,6 @@ RUN poetry install --no-root
 
 ADD . /opt/openstates/openstates/
 
-ARG CRONOS_ENDPOINT
-ENV CRONOS_ENDPOINT=${CRONOS_ENDPOINT}
 ARG CACHE_BUCKET
 ENV CACHE_BUCKET=${CACHE_BUCKET}
 

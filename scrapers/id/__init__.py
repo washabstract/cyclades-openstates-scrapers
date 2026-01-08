@@ -9,7 +9,7 @@ class Idaho(State):
         "bills": IDBillScraper,
         "events": IDEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2011 Session",
             "classification": "primary",

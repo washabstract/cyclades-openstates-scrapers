@@ -14,7 +14,7 @@ class Connecticut(State):
         "events": CTEventScraper,
         "votes": CTVoteScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2011",
             "identifier": "2011",

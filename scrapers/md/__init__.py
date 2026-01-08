@@ -11,7 +11,7 @@ class Maryland(State):
         "events": MDEventScraper,
         "votes": MDVoteScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2007 Regular Session",
             "classification": "primary",

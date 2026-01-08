@@ -10,7 +10,7 @@ class Illinois(State):
         "bills": IlBillScraper,
         "events": IlEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "name": "90th Regular Session",
             "identifier": "90th",

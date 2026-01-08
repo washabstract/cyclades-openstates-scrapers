@@ -9,7 +9,7 @@ class NorthCarolina(State):
         "bills": NCBillScraper,
         "events": NCEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "1985-1986 Session",
             "classification": "primary",

@@ -11,7 +11,7 @@ class SouthDakota(State):
         "bills": SDBillScraper,
         "events": SDEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "2009",
             "identifier": "2009",

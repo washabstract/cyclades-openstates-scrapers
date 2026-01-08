@@ -14,7 +14,7 @@ class Iowa(State):
         "votes": IAVoteScraper,
         "events": IAEventScraper,
     }
-    historical_legislative_sessions = [
+    legislative_sessions = [
         {
             "_scraped_name": "General Assembly: 84",
             "identifier": "2011-2012",
