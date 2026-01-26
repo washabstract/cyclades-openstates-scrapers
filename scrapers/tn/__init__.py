@@ -143,7 +143,7 @@ class Tennessee(State):
             "identifier": "114",
             "name": "114th Regular Session (2025-2026)",
             "start_date": "2025-01-14",
-            "end_date": "2025-04-25",
+            "end_date": "2026-04-25",
             "active": True,
         },
         {
@@ -153,7 +153,7 @@ class Tennessee(State):
             "name": "114th First Extraordinary Session (January 2025)",
             "start_date": "2025-01-27",
             "end_date": "2025-01-31",
-            "active": True,
+            "active": False,
         },
     ]
     ignored_scraped_sessions = [
@@ -181,16 +181,16 @@ class Tennessee(State):
         ]
 
         # check to see if regular session index page has a link to a special session
-        current_special_session_links = [
-            x
+        current_special_session_names = [
+            x.strip()
             for x in url_xpath(
-                "https://wapp.capitol.tn.gov/apps/indexes/",
-                '//a[contains(text(), "Extraordinary Session")]/text()',
+                "https://wapp.capitol.tn.gov/apps/Indexes/BillsByIndex",
+                '//select[@id="ssDropdown"]/option/text()',
                 verify=False,
             )
         ]
         current_special_sessions = [
-            x.replace("Bill Index", "").strip() for x in current_special_session_links
+            x.replace("Bill Index", "").strip() for x in current_special_session_names
         ]
 
         return archived_sessions + current_special_sessions
