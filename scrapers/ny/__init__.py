@@ -6,6 +6,7 @@ from openstates.scrape import State
 from .bills import NYBillScraper
 from .events import NYEventScraper
 
+from utils.secrets import get_secret
 
 settings = dict(SCRAPELIB_TIMEOUT=120)
 
@@ -91,7 +92,7 @@ class NewYork(State):
         end_year = current_year if current_year % 2 == 1 else current_year + 1
 
         listed_sessions = []
-        api_key = os.environ["NEW_YORK_API_KEY"]
+        api_key = get_secret("NEW_YORK_API_KEY")
         for start_year in range(2007, end_year + 1, 2):
             response = requests.get(
                 f"https://legislation.nysenate.gov/api/3/bills/{start_year}?limit=1&offset=1&full=True&sort=&key={api_key}"
