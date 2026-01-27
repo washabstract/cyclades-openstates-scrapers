@@ -32,7 +32,7 @@ class NYEventScraper(Scraper):
 
     def scrape(self, session=None, start=None, end=None):
 
-        self.api_key = get_secret(["NEW_YORK_API_KEY"])
+        self.api_key = get_secret("NEW_YORK_API_KEY")
         self.api_client = OpenLegislationAPIClient(self)
 
         if session is None:
