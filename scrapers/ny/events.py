@@ -13,6 +13,7 @@ from openstates.scrape import Scraper, Event
 from openstates.exceptions import EmptyScrape
 from .apiclient import OpenLegislationAPIClient
 from utils import hash_key
+from utils.secrets import get_secret
 
 """
 Senate bill suffix regex.
@@ -31,7 +32,7 @@ class NYEventScraper(Scraper):
 
     def scrape(self, session=None, start=None, end=None):
 
-        self.api_key = os.environ["NEW_YORK_API_KEY"]
+        self.api_key = get_secret(["NEW_YORK_API_KEY"])
         self.api_client = OpenLegislationAPIClient(self)
 
         if session is None:
