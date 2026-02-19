@@ -21,6 +21,7 @@ SESSION_SOURCE_IDS = {
     "2025s1": "304",
 }
 
+
 # Please note: this only supports the MN House, not the Senate. Senate votes are scraped in bills.py
 class MNVoteScraper(Scraper):
 
