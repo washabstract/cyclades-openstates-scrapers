@@ -277,26 +277,28 @@ class MEBillScraper(Scraper):
                     v_links = []
 
                     for v in range(
-                        0, len(vdoc.xpath('//span[@class="story_heading"]')) - 1
+                        0,
+                        len(vdoc.xpath('//span[contains(@class, "story_heading")]'))
+                        - 1,
                     ):
-                        version_title = vdoc.xpath('//span[@class="story_heading"]')[
-                            v
-                        ].text
+                        version_title = vdoc.xpath(
+                            '//span[contains(@class, "story_heading")]'
+                        )[v].text
                         version_pdf = vdoc.xpath(
-                            "//span[@class='story_heading']/following::a[contains(@href, 'getPDF')]/@href"
+                            "//span[contains(@class, 'story_heading')]/following::a[contains(@href, 'getPDF')]/@href"
                         )
                         version_html = vdoc.xpath(
-                            "//span[@class='story_heading']/following::a[contains(@class, 'small_html_btn')]"
+                            "//span[contains(@class, 'story_heading')]/following::a[contains(@class, 'small_html_btn')]"
                             "[contains(@href, 'asp')]/@href"
                         )
                         version_rtf = vdoc.xpath(
-                            "//span[@class='story_heading']/following::a[contains(@href, 'rtf')]/@href"
+                            "//span[contains(@class, 'story_heading')]/following::a[contains(@href, 'rtf')]/@href"
                         )
                         version_fiscal_pdf = vdoc.xpath(
-                            "//span[@class='story_heading']/following::a[contains(@href, 'fiscalpdfs')]/@href"
+                            "//span[contains(@class, 'story_heading')]/following::a[contains(@href, 'fiscalpdfs')]/@href"
                         )
                         version_fiscal_html = vdoc.xpath(
-                            "//span[@class='story_heading']/following::a[contains(@href, 'fiscalnotes')]/@href"
+                            "//span[contains(@class, 'story_heading')]/following::a[contains(@href, 'fiscalnotes')]/@href"
                         )
 
                         # If statement is to prevent out of range errors as some
