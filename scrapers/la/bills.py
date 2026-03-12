@@ -295,8 +295,10 @@ class LABillScraper(Scraper, LXMLMixin):
         title = page.xpath("//span[@id='ctl00_PageBody_LabelShortTitle']/text()")[0]
         title = title.replace("\u00a0\u00a0", " ")
         these_actions = page.xpath(
-            "//div[@id='ctl00_PageBody_PanelBillInfo']/"
-            "/table[@style='font-size:small']/tr"
+            "//div[@id='ctl00_PageBody_PanelBillInfo']"
+            "//table[.//th[contains(normalize-space(), 'Date')]"
+            " and .//th[contains(normalize-space(), 'Chamber')]"
+            " and .//th[contains(normalize-space(), 'Action')]]//tr[td]"
         )
 
         bill_id = page.xpath("//span[@id='ctl00_PageBody_LabelBillID']/text()")[0]
