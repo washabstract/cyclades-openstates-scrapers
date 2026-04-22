@@ -108,8 +108,9 @@ class Washington(State):
     def get_session_list(self):
         from utils.lxmlize import url_xpath
 
-        return url_xpath(
-            "https://apps.leg.wa.gov/billinfo/",
-            '//select[@id="biennium"]/option/@value',
+        result = url_xpath(
+            "https://leg.wa.gov/",
+            '//select[@id="biennium"]/option/text()',
             verify=False,
         )
+        return result
